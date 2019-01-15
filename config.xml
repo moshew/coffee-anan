@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="il.co.a-report" version="3.61">
+  <name>דוח סגולה</name>
+  <description>A-Report by click</description>
+  <author href="http://a-report.co.il" email="support@a-report.co.il">A-Report Team</author>
+  <content src="index.html"/>
+  <preference name="permissions" value="none"/>
+  <preference name="orientation" value="portrait"/>
+  <preference name="target-device" value="universal"/>
+  <preference name="fullscreen" value="false"/>
+  <preference name="webviewbounce" value="true"/>
+  <preference name="prerendered-icon" value="true"/>
+  <preference name="stay-in-webview" value="false"/>
+  <preference name="ios-statusbarstyle" value="black-opaque"/>
+  <preference name="detect-data-types" value="true"/>
+  <preference name="exit-on-suspend" value="false"/>
+  <preference name="ShowSplashScreenSpinner" value="false" />
+  <preference name="FadeSplashScreen" value="true" />
+  <preference name="FadeSplashScreenDuration" value="500" />
+  <!--<preference name="AutoHideSplashScreen " value="true"/>-->
+  <preference name="DisallowOverscroll" value="true" />
+  <preference name="DisableCursor" value="false"/>
+  <preference name="android-minSdkVersion" value="14"/>
+  <preference name="android-installLocation" value="auto"/>
+  <preference name="phonegap-version" value="cli-6.4.0" />
+  <preference name="android-build-tool" value="gradle" />
+  <plugin name="cordova-plugin-splashscreen" source="npm" spec="~3.2.1"/>
+  <plugin name="cordova-plugin-inappbrowser" source="npm" spec="~1.3.0"/>
+  <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1" />
+  <gap:plugin name="onesignal-cordova-plugin" spec="^2.0.10" source="npm" />
+  <icon src="res/icon.png"/>
+  <splash src="res/splash.png"/>
+  <platform name="android">
+    <icon src="res/icon/android/icon-36-ldpi.png" density="ldpi"/>
+    <icon src="res/icon/android/icon-48-mdpi.png" density="mdpi"/>
+    <icon src="res/icon/android/icon-72-hdpi.png" density="hdpi"/>
+    <icon src="res/icon/android/icon-96-xhdpi.png" density="xhdpi"/>
+    <splash src="res/screen/android/screen-ldpi-portrait.png" density="port-ldpi"/>
+    <splash src="res/screen/android/screen-mdpi-portrait.png" density="port-mdpi"/>
+    <splash src="res/screen/android/screen-hdpi-portrait.png" density="port-hdpi"/>
+    <splash src="res/screen/android/screen-xhdpi-portrait.png" density="port-xhdpi"/>
+  </platform>
+  <platform name="ios">
+    <icon height="57" platform="ios" src="res/icon/ios/icon.png" width="57" />
+    <icon height="114" platform="ios" src="res/icon/ios/icon@2x.png" width="114" />
+    <icon height="40" platform="ios" src="www/res/icon/ios/icon-40.png" width="40" />
+    <icon height="80" platform="ios" src="www/res/icon/ios/icon-40@2x.png" width="80" />
+    <icon height="50" platform="ios" src="www/res/icon/ios/icon-50.png" width="50" />
+    <icon height="100" platform="ios" src="www/res/icon/ios/icon-50@2x.png" width="100" />
+    <icon height="60" platform="ios" src="www/res/icon/ios/icon-60.png" width="60" />
+    <icon height="120" platform="ios" src="www/res/icon/ios/icon-60@2x.png" width="120" />
+    <icon height="180" platform="ios" src="www/res/icon/ios/icon-60@3x.png" width="180" />
+    <icon height="72" platform="ios" src="res/icon/ios/icon-72.png" width="72" />
+    <icon height="144" platform="ios" src="res/icon/ios/icon-72@2x.png" width="144" />
+    <icon height="76" platform="ios" src="www/res/icon/ios/icon-76.png" width="76" />
+    <icon height="152" platform="ios" src="www/res/icon/ios/icon-76@2x.png" width="152" />
+    <icon height="29" platform="ios" src="www/res/icon/ios/icon-small.png" width="29" />
+    <icon height="58" platform="ios" src="www/res/icon/ios/icon-small@2x.png" width="58" />
+    <icon height="87" platform="ios" src="www/res/icon/ios/icon-small@3x.png" width="87" />
+    <splash height="1136" platform="ios" src="res/screen/ios/Default-568h@2x~iphone.png" width="640" />
+    <splash height="1334" platform="ios" src="res/screen/ios/Default-667h.png" width="750" />
+    <splash height="2208" platform="ios" src="res/screen/ios/Default-736h.png" width="1242" />
+    <splash height="2048" platform="ios" src="res/screen/ios/Default-Portrait@2x~ipad.png" width="1536" />
+    <splash height="1024" platform="ios" src="res/screen/ios/Default-Portrait~ipad.png" width="768" />
+    <splash height="960" platform="ios" src="res/screen/ios/Default@2x~iphone.png" width="640" />
+    <splash height="480" platform="ios" src="res/screen/ios/Default~iphone.png" width="320" />
+  </platform>
+  <access origin="*"/>
+  <allow-intent href="http://*/*"/>
+  <allow-intent href="https://*/*"/>
+  <allow-intent href="tel:*"/>
+  <allow-intent href="sms:*"/>
+  <allow-intent href="mailto:*"/>
+  <allow-intent href="geo:*"/>
+  <platform name="android">
+    <allow-intent href="market:*"/>
+  </platform>
+  <platform name="ios">
+    <allow-intent href="itms:*"/>
+    <allow-intent href="itms-apps:*"/>
+  </platform>
+</widget>
