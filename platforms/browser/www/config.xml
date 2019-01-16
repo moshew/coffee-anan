@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="il.co.a-report" version="3.61" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>דוח סגולה</name>
-    <description>A-Report by click</description>
-    <author email="support@a-report.co.il" href="http://a-report.co.il">A-Report Team</author>
+    <name>קופי ענן</name>
+    <description>Monitoring and Managemnt of Coffeemakers on the Cloud</description>
+    <author email="support@ikafe.tk" href="http://ikafe.tk">SMSC - Smart Management Solutions on the Cloud</author>
     <content src="index.html" />
     <gap:plugin name="onesignal-cordova-plugin" source="npm" spec="^2.0.10" />
     <icon src="res/icon.png" />
@@ -31,6 +31,6 @@
     <preference name="DisableCursor" value="false" />
     <preference name="android-minSdkVersion" value="14" />
     <preference name="android-installLocation" value="auto" />
-    <preference name="phonegap-version" value="cli-6.4.0" />
+    <preference name="phonegap-version" value="cli-6.5.0" />
     <preference name="android-build-tool" value="gradle" />
 </widget>
