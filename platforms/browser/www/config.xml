@@ -4,7 +4,7 @@
     <description>Monitoring and Managemnt of Coffeemakers on the Cloud</description>
     <author email="support@ikafe.tk" href="http://ikafe.tk">SMSC - Smart Management Solutions on the Cloud</author>
     <content src="index.html" />
-    <gap:plugin name="onesignal-cordova-plugin" source="npm" spec="^2.0.10" />
+    <gap:plugin name="onesignal-cordova-plugin" source="npm" />
     <icon src="res/icon.png" />
     <splash src="res/splash.png" />
     <access origin="*" />
