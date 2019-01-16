@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="il.co.a-report" version="3.61">
   <name>קופי ענן</name>
-  <description>Monitoring & Managemnt of Coffeemakers on the Cloud</description>
+  <description>Monitoring and Managemnt of Coffeemakers on the Cloud</description>
   <author href="http://ikafe.tk" email="support@ikafe.tk">SMSC - Smart Management Solutions on the Cloud</author>
   <content src="index.html"/>
   <preference name="permissions" value="none"/>
