@@ -144,6 +144,7 @@ app.factory('dataShare', function ($http, $location, $timeout, $window) {
     };
 
     service.register = function() {
+		/*
         if (this.data.id != -1) {
             $timeout(function () {
                 try {
@@ -160,11 +161,14 @@ app.factory('dataShare', function ($http, $location, $timeout, $window) {
                 catch (err) { }
             }, 1000);
         }
+		*/
     };
 
+	/*
     service.notificationOpenedCallback = function(jsonData) {
     };
-
+	*/
+	
     service.changePage = function (data, path) {
         this.mainPage = false;
         this.set(data);
