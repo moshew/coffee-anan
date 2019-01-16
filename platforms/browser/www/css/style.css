@@ -310,11 +310,27 @@ div{
     margin-top: -220px;
 }
 
+.ca-menulogo {
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+.ca-menubtn {
+    border-radius: 5px;
+    margin: 5px;
+    width: 150px;
+    height: 160px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #00aeef;
+    display: inline-block;
+    /*font-size:120%;*/
+}
+
 .report-btn {
     border-radius: 5px;
-    margin: 8px;
-    width: 78px;
-    height: 85px;
+    margin: 5px;
+    width: 150px;
+    height: 160px;
     border-width: 1px;
     border-style: solid;
     border-color: #00aeef;

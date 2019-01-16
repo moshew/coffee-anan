@@ -1,5 +1,5 @@
 ﻿// script.js
-var domain = 'http://a-report.co.il/';
+var domain = 'http://ikafe.tk/coffee-anan/srv/';
 
 var app = angular.module('app', ['ngRoute', 'ngAnimate', 'ngMaterial', 'angucomplete-alt', 'multipleDatePicker', 'ngMobile']);
 
@@ -10,7 +10,7 @@ app.run(function($http, dataShare) {
             dataShare.set(data);
             dataShare.register();
 
-            if (data.ver <= 3.61) {
+            if (data.ver <= 1) {
                 if (data.id == -1) dataShare.changePage(data, 'login');
                 else if (data.settings.message_status==2) dataShare.action('message', 'message');
                 else dataShare.changePage(data);
@@ -49,12 +49,17 @@ app.config(function ($routeProvider) {
 
         .when('/status', {
             templateUrl: 'pages/status.html',
-            controller: 'statusController'
+            controller: 'menuController'
         })
 
         .when('/report', {
             templateUrl: 'pages/report.html',
-            controller: 'statusController'
+            controller: 'menuController'
+        })
+
+        .when('/menu', {
+            templateUrl: 'pages/ca-menu.html',
+            controller: 'menuController'
         })
 
         .when('/statusList', {
@@ -69,12 +74,12 @@ app.config(function ($routeProvider) {
 
         .when('/futureReport', {
             templateUrl: 'pages/futureReport.html',
-            controller: 'statusController'
+            controller: 'menuController'
         })
 
         .when('/futureStatus', {
             templateUrl: 'pages/futureStatus.html',
-            controller: 'statusController'
+            controller: 'menuController'
         })
 
         .when('/tracking', {
@@ -165,8 +170,8 @@ app.factory('dataShare', function ($http, $location, $timeout, $window) {
         this.set(data);
         if (path == null) {
             this.mainPage = true;
-            if (data.status == -1) path = 'report';
-            else path = 'status';
+            //path = 'report';
+			path = 'menu';
         }
         else if (path=='reportAdmin') this.mainPage = true;
         $location.path(path);
@@ -316,7 +321,7 @@ app.controller('messageController', function ($scope, $http, $location, $timeout
     };
 });
 
-app.controller('statusController', function ($scope, $http, $location, dataShare, $timeout) {
+app.controller('menuController', function ($scope, $http, $location, dataShare, $timeout) {
     $scope.dataShare = dataShare;
     $scope.optionsShow = false;
     if (dataShare.get()==null) { $location.path(''); return; }
