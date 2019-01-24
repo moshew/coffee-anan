@@ -60,7 +60,7 @@ div{
     top:0;
     bottom:0;
     width:100%;
-    padding-top:20px;
+    padding-top:0px;
     text-align:center;
     outline: none;
     color: white;
@@ -311,21 +311,41 @@ div{
 }
 
 .ca-menulogo {
-	margin-top: 30px;
-	margin-bottom: 30px;
+	margin-top: 20px;
+	margin-bottom: 25px;
 }
 .ca-menubtn {
     border-radius: 5px;
-    margin: 5px;
-    width: 150px;
-    height: 160px;
+    margin: 8px 5px;
+    width: 140px;
+    height: 180px;
     border-width: 1px;
     border-style: solid;
-    border-color: #00aeef;
+    /*border-color: #00aeef;*/
+    border-color: rgba(255,255,255,0.3);
     display: inline-block;
     /*font-size:120%;*/
+	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
 }
 
+.ca-menubtnimg {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 120px;
+	height: 120px;
+	
+}
+
+.ca-menubtnlbl {
+	font-size: 130%;
+}
+
+.ca-menucw {
+	position: absolute;
+	font-size: 10px;
+	bottom: 5px;
+	left: 10px;
+}
 .report-btn {
     border-radius: 5px;
     margin: 5px;
@@ -336,6 +356,7 @@ div{
     border-color: #00aeef;
     display: inline-block;
     /*font-size:120%;*/
+	padding: 10px;
 }
 
 .report-btnLabel {
@@ -487,6 +508,22 @@ div{
     font-size:185%;
     background: #4b688e;
     display: inline-block;
+}
+
+.ca-sitesheader {
+    width:98%;
+    margin-bottom: 10px;
+    text-align:center;
+    font-size:150%;
+    background: #4b688e;
+    display: inline-block;
+}
+
+.ca-siteslistitem {
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 7px;
+    font-size:140%;
 }
 
 .statusList-leftOpt {

@@ -62,6 +62,16 @@ app.config(function ($routeProvider) {
             controller: 'menuController'
         })
 
+        .when('/sites', {
+            templateUrl: 'pages/ca-sites.html',
+            controller: 'machinesController'
+        })
+
+        .when('/site', {
+            templateUrl: 'pages/ca-site.html',
+            controller: 'machinesController'
+        })
+
         .when('/statusList', {
             templateUrl: 'pages/statusList.html',
             controller: 'statusListController'
@@ -171,10 +181,9 @@ app.factory('dataShare', function ($http, $location, $timeout, $window) {
 	
     service.changePage = function (data, path) {
         this.mainPage = false;
-        this.set(data);
+        if (data!=null) this.set(data);
         if (path == null) {
             this.mainPage = true;
-            //path = 'report';
 			path = 'menu';
         }
         else if (path=='reportAdmin') this.mainPage = true;
@@ -311,237 +320,20 @@ app.controller('loginController', function ($scope, $http, $mdDialog, dataShare)
     };
 });
 
-app.controller('messageController', function ($scope, $http, $location, $timeout, dataShare) {
-    $scope.dataShare = dataShare;
-    if (dataShare.get()==null) { $location.path(''); return; }
-
-    $scope.confirm = function () {
-        dataShare.setLoading(true);
-        $http.jsonp(domain + 'message.php?callback=JSON_CALLBACK&op=confirm&id=' + dataShare.get().id)
-            .success(function (data) {
-                dataShare.setLoading(false);
-                dataShare.action('main', 'login');
-            });
-    };
-});
-
 app.controller('menuController', function ($scope, $http, $location, dataShare, $timeout) {
     $scope.dataShare = dataShare;
-    $scope.optionsShow = false;
     if (dataShare.get()==null) { $location.path(''); return; }
 
-    $scope.reportPage='main';
-    $scope.info_image = 'report_info';
+    $scope.myStyle = [null,null,null,null];
 
-    $scope.myStyle = [null,null,null,null,null,null,null,null,null,null,null,null];
-
-    if ('report' in dataShare.get()) {
-        $timeout(function () {
-            $scope.status_savedMsg = true;
-            $timeout(function () {
-                $scope.status_savedMsg = false;
-            }, 5 * 1000);
-        }, 250);
-    }
-
-    $scope.keyEvent = function(keyEvent, info) {
-        if (keyEvent.which === 13) $scope.InfoPopupCB(info);
+	var pages = [['sites','ca-sites'], ['sites','ca-sites'], ['sites','ca-sites'], ['sites','ca-sites']];
+    $scope.report = function (option) {
+		$scope.myStyle[option] = { 'background-color': 'rgba(0,0,0,0.2' };
+		dataShare.action(pages[option][0], pages[option][1]);
     };
-
-    $scope.return = function () {
-        $scope.optionsShow = false;
-    };
-
-    var isFuture = false;
-    var statusSelected = 0;
-    $scope.report = function (status) {
-        if (status==null) isFuture=true;
-        else statusSelected = status;
-
-        var infoNeeded = (statusSelected<=10)?false:$scope.reportOptions[statusSelected].info;
-        if (statusSelected==4 || infoNeeded) {
-            $scope.info_image = (statusSelected == 4) ? 'report_info' : 'report_info2';
-            $scope.report_infoMsg = true;
-        }
-        else {
-            var info = '';
-            if (statusSelected>10) info = $scope.reportOptions[statusSelected].title;
-            if (isFuture) futureReport(statusSelected, info);
-            else dayReport(statusSelected, info);
-        }
-    };
-
-    $scope.cancelReport = function(isSingle) {
-        if (isSingle) dayReport(-1);
-        else {
-            u_id = dataShare.get()["u_id"];
-            if (u_id!=null) dataShare.action('futureStatus', 'future_tasks_as', {u_id: u_id});
-            else dataShare.action('futureStatus', 'future_tasks');
-        }
-    };
-
-    $scope.reportOthers = function (future) {
-        isFuture = future;
-        dataShare.setLoading(true);
-        $http.jsonp(domain+'report_options.php?callback=JSON_CALLBACK')
-            .success(function (data) {
-                $scope.reportOptions = data;
-                dataShare.setLoading(false);
-                $scope.optionsShow = true;
-            });
-    };
-
-    $scope.reportOption = function (status) {
-
-        if (isFuture) {
-            $scope.optionsShow = false;
-            $scope.changeFutureStatus(status);
-        }
-        else $scope.report(status);
-    };
-
-    $scope.addNewTask = function() {
-        u_id = dataShare.get()["u_id"];
-        if (u_id!=null) dataShare.action('futureReport', 'report_as', {u_id: u_id});
-         else dataShare.action('futureReport', 'login');
-    };
-
-    $scope.cancelTask = function(taskId) {
-        dataShare.setLoading(true);
-
-        u_id = dataShare.get()["u_id"];
-        base_url = (u_id!=null)?'future_tasks_as.php?u_id='+u_id+'&':'future_tasks.php?';
-        $http.jsonp(domain+base_url+'callback=JSON_CALLBACK&id=' + dataShare.get().id + '&task_id=' + taskId + '&oper=-1')
-            .success(function (data) {
-                dataShare.setLoading(false);
-                dataShare.set(data);
-            });
-    };
-
-    $scope.InfoPopupCB = function (info) {
-        if (info!=null) {
-            $scope.report_infoMsg = false;
-            if (statusSelected>10) info = $scope.reportOptions[statusSelected].title + ': ' + info;
-            if (isFuture) futureReport(statusSelected, info);
-            else dayReport(statusSelected, info);
-        }
-    };
-
-    var reportSent = false;
-    var dayReport = function (status, info) {
-        if (reportSent) return;
-        else reportSent = true;
-
-        if (info==null) info='';
-        if (status>=0) $scope.myStyle[status] = { 'background-color': '#80be40' };
-
-        dataShare.setLoading(true);
-        u_id = dataShare.get()["u_id"];
-        u_idParam = (u_id!=null)?'&u_id='+u_id:'';
-        $http.jsonp(domain+'report.php?callback=JSON_CALLBACK&id=' + dataShare.get().id + '&oper=' + status + '&info='+info + u_idParam)
-            .success(function (data) {
-                dataShare.setLoading(false);
-                if (u_id!=null) dataShare.action('statusList', 'notifications');
-                else dataShare.changePage(data);
-            });
-    };
-
-    var futureReport = function (status, info) {
-        if (info==null) info='';
-
-        var start_day = moment($scope.report_dates.start_day).format('YYYY-MM-DD');
-        var end_day   = moment($scope.report_dates.end_day).format('YYYY-MM-DD');
-        dataShare.setLoading(true);
-        u_id = dataShare.get()["u_id"];
-        base_url = (u_id!=null)?'future_tasks_as.php?u_id='+u_id+'&':'future_tasks.php?';
-        $http.jsonp(domain+base_url+'callback=JSON_CALLBACK&id=' + dataShare.get().id + '&start_day=' + start_day + '&end_day=' + end_day + '&oper=' + status + '&info='+info)
-            .success(function (data) {
-                dataShare.setLoading(false);
-                if (data.status.code=='success') {
-                    if (u_id != null) dataShare.action('futureStatus', 'future_tasks_as', {u_id: u_id});
-                    else dataShare.action('futureStatus', 'future_tasks');
-                } else {
-                    $scope.errorInfo = data.status.info;
-                    $scope.errorMsg = true;
-                }
-            });
-    };
-
-    $scope.errorMsgClose = function (info) {
-        $scope.errorMsg = false;
-    };
-
-    $scope.today = new Date(dataShare.get().day);
-    var tomorrow = new Date();
-    tomorrow.setDate($scope.today.getDate() + 1);
-    $scope.report_dates = { start_day: tomorrow, end_day: tomorrow };
-    $scope.display1 = $scope.report_dates.start_day;
-    if ($scope.report_dates.end_date!=null) $scope.display1 += " - " + $scope.report_dates.end_date;
-
-    $scope.dateChanged = function () {
-        if ($scope.report_dates.end_day < $scope.report_dates.start_day)
-            $scope.report_dates.end_day = $scope.report_dates.start_day;
-    };
-
-    $scope.report2BtnStyle = [{ 'background-color': '#80be40' }, null, null, null, null, null, null, null, null, null, null, null];
-    $scope.changeFutureStatus = function (status) {
-        var prevStatus = (statusSelected<=10)?statusSelected:11;
-        var currStatus = (status<=10)?status:11;
-        $scope.report2BtnStyle[prevStatus] = { 'background-color': '#234a7d' };
-        $scope.report2BtnStyle[currStatus] = { 'background-color': '#80be40' };
-        statusSelected = status;
-    };
-
-    $scope.highlightDays = [{date: moment($scope.report_dates.start_day), css: 'picker-selected', selectable: true,title: ''}];
-    $scope.dateDisplay = moment($scope.report_dates.start_day).format('D/M');
-    $scope.daySelected = function(event, date) {
-        event.preventDefault(); // prevent the select to happen
-        //reproduce the standard behavior
-        if ($scope.report_dates.start_day==null || $scope.report_dates.end_day!=null) {
-            if (date>=$scope.today) {
-                $scope.report_dates.end_day=null;
-                $scope.report_dates.start_day = date;
-                $scope.highlightDays = [{date: moment(date), css: 'picker-selected', selectable: true,title: ''}];
-            }
-            else {
-                $scope.highlightDays = [];
-                $scope.report_dates.start_day = $scope.report_dates.end_day = null;
-            }
-        } else {
-            if (date > $scope.report_dates.start_day) {
-                $scope.report_dates.end_day = date;
-                var d = new Date($scope.report_dates.start_day);
-                while (d < $scope.report_dates.end_day) {
-                    d.setDate(d.getDate() + 1);
-                    $scope.highlightDays.push({
-                        date: moment(new Date(d)),
-                        css: 'picker-selected',
-                        selectable: true,
-                        title: ''
-                    });
-                }
-            }
-            else {
-                $scope.highlightDays = [];
-                $scope.report_dates.start_day = $scope.report_dates.end_day = null;
-            }
-        }
-    };
-
-    $scope.calanderBack = function() {
-        if ($scope.report_dates.start_day!=null) {
-            $scope.dateDisplay = moment($scope.report_dates.start_day).format('D/M');
-            if ($scope.report_dates.end_day == null) {
-                $scope.report_dates.end_day = $scope.report_dates.start_day
-            } else if ($scope.report_dates.end_day != $scope.report_dates.start_day) {
-                $scope.dateDisplay += " - " + moment($scope.report_dates.end_day).format('D/M');
-            }
-            $scope.showCalander=false;
-        }
-    }
 });
 
-app.controller('statusListController', function ($scope, $http, $timeout, $location, dataShare) {
+app.controller('machinesController', function ($scope, $http, $timeout, $location, dataShare) {
     $scope.dataShare = dataShare;
     if (dataShare.get()==null) { $location.path(''); return; }
 
