@@ -3,7 +3,7 @@ var domain = 'http://ikafe.tk/coffee-anan/srv/';
 
 var app = angular.module('app', ['ngRoute', 'ngAnimate', 'ngMaterial', 'angucomplete-alt', 'multipleDatePicker', 'ngMobile']);
 
-app.run(function($http, dataShare) {
+app.run(function($http, $timeout, dataShare) {
     var id = window.localStorage.getItem("id");
     $http.jsonp(domain + 'login.php?callback=JSON_CALLBACK&id=' + id)
         .success(function (data) {
@@ -13,7 +13,13 @@ app.run(function($http, dataShare) {
             if (data.ver <= 1) {
                 if (data.id == -1) dataShare.changePage(data, 'login');
                 else if (data.settings.message_status==2) dataShare.action('message', 'message');
-                else dataShare.changePage(data);
+                else {
+					//dataShare.changePage(data);
+					$timeout(function () {
+						dataShare.changePage(data);
+					}, 3 * 1000);
+					
+				}
             } else dataShare.action('versionUpdate', 'login')
         });
 });
@@ -23,12 +29,7 @@ app.config(function ($routeProvider) {
     $routeProvider
 
         .when('/', {
-            templateUrl: 'pages/start.html',
-            controller: 'mainController'
-        })
-
-        .when('/home', {
-            templateUrl: 'pages/home.html',
+            templateUrl: 'pages/ca-home.html',
             controller: 'mainController'
         })
 
@@ -40,21 +41,6 @@ app.config(function ($routeProvider) {
         .when('/login', {
             templateUrl: 'pages/login.html',
             controller: 'loginController'
-        })
-
-        .when('/message', {
-            templateUrl: 'pages/message.html',
-            controller: 'messageController'
-        })
-
-        .when('/status', {
-            templateUrl: 'pages/status.html',
-            controller: 'menuController'
-        })
-
-        .when('/report', {
-            templateUrl: 'pages/report.html',
-            controller: 'menuController'
         })
 
         .when('/menu', {
@@ -72,50 +58,28 @@ app.config(function ($routeProvider) {
             controller: 'machinesController'
         })
 
-        .when('/statusList', {
-            templateUrl: 'pages/statusList.html',
-            controller: 'statusListController'
+        .when('/notifications', {
+            templateUrl: 'pages/ca-notifications.html',
+            controller: 'notificationsController'
         })
 
-        .when('/permissions', {
-            templateUrl: 'pages/permissions.html',
-            controller: 'permissionsController'
+        .when('/reports', {
+            templateUrl: 'pages/ca-reports.html',
+            controller: 'reportsController'
         })
 
-        .when('/futureReport', {
-            templateUrl: 'pages/futureReport.html',
-            controller: 'menuController'
+        .when('/report', {
+            templateUrl: 'pages/ca-report.html',
+            controller: 'reportsController'
+        })
+		
+		.when('/settings', {
+            templateUrl: 'pages/ca-settings.html',
+            controller: 'settingsController'
         })
 
-        .when('/futureStatus', {
-            templateUrl: 'pages/futureStatus.html',
-            controller: 'menuController'
-        })
 
-        .when('/tracking', {
-            templateUrl: 'pages/tracking.html',
-            controller: 'trackingController'
-        })
 
-        .when('/reportAdmin', {
-            templateUrl: 'pages/reportAdmin.html',
-            controller: 'adminController'
-        })
-
-        .when('/users', {
-            templateUrl: 'pages/users.html',
-            controller: 'adminController'
-        })
-
-        .when('/messageAdmin', {
-            templateUrl: 'pages/messageAdmin.html',
-            controller: 'adminController'
-        })
-
-        .when('/formsUsers', {
-            templateUrl: 'pages/forms.html',
-            controller: 'adminController'
-        })
 });
 
 app.config(function ($mdThemingProvider) {
@@ -186,13 +150,14 @@ app.factory('dataShare', function ($http, $location, $timeout, $window) {
             this.mainPage = true;
 			path = 'menu';
         }
-        else if (path=='reportAdmin') this.mainPage = true;
         $location.path(path);
+		/*
         $timeout.cancel(pagePromise);
         pagePromise = $timeout(function () {
             this.mainPage = false;
             $location.path('home');
         }, 5 * 60 * 1000);
+		*/
     };
 
     service.action = function (oper, page, params) {
@@ -326,7 +291,7 @@ app.controller('menuController', function ($scope, $http, $location, dataShare, 
 
     $scope.myStyle = [null,null,null,null];
 
-	var pages = [['sites','ca-sites'], ['sites','ca-sites'], ['sites','ca-sites'], ['sites','ca-sites']];
+	var pages = [['sites','ca-sites'], ['notifications','ca-notifications'], ['reports','ca-settings'], ['settings','ca-settings']];
     $scope.report = function (option) {
 		$scope.myStyle[option] = { 'background-color': 'rgba(0,0,0,0.2' };
 		dataShare.action(pages[option][0], pages[option][1]);
@@ -336,330 +301,63 @@ app.controller('menuController', function ($scope, $http, $location, dataShare, 
 app.controller('machinesController', function ($scope, $http, $timeout, $location, dataShare) {
     $scope.dataShare = dataShare;
     if (dataShare.get()==null) { $location.path(''); return; }
+	$scope.stockupdateinp = {val: 2};
 
-    $scope.search_url = domain+'get_users.php?id='+dataShare.get().id+'&s=';
-    $scope.errorMsg = false;
-
-    $scope.removeUser = function (user) {
-        $http.jsonp(domain+'notifications.php?callback=JSON_CALLBACK&op=del&id=' + dataShare.get().id+'&u_id='+user.u_id)
+    $scope.siteStockUpdateCB = function(approve) {
+		if (!approve) {
+			$scope.errorMsg = false;
+			return;
+		}
+		if ($scope.stockupdateinp.val==null) return;
+		dataShare.setLoading(true);
+		$http.jsonp(domain + 'ca-updateStock.php?callback=JSON_CALLBACK&id=' + dataShare.get().id + "&sid=" + dataShare.get().site.id + "&val=" + $scope.stockupdateinp.val)
             .success(function (data) {
+				dataShare.setLoading(false);
                 dataShare.set(data);
+                $scope.errorMsg = false;
             });
-    };
-
-    $scope.addUser = function (user) {
-        if (user!=null) {
-            $http.jsonp(domain + 'notifications.php?callback=JSON_CALLBACK&op=req&id=' + dataShare.get().id + '&u_id=' + user.originalObject.u_id)
-                .success(function (data) {
-                    dataShare.set(data);
-                    $scope.$broadcast('angucomplete-alt:clearInput', 'statusList-AddUser');
-                });
-        }
-    };
-
-    $scope.report = function(u_id) {
-        if (dataShare.getSettings().admin || dataShare.getSettings().manager) {
-            dataShare.action('report', 'report_as', {u_id: u_id});
-        }
-    };
-
-    $scope.report2 = function(u_id) {
-        if (dataShare.getSettings().admin) {
-            dataShare.action('futureStatus', 'future_tasks_as', {u_id: u_id});
-        }
-        else if (dataShare.getSettings()['manager']) $scope.report(u_id);
-    };
-
-    $scope.approve = function() {
-        $http.jsonp(domain + 'approvals.php?callback=JSON_CALLBACK&id=' + dataShare.get().id)
-            .success(function (data) {
-                if (data.status.code=='success') {
-                    $scope.successMsg = true;
-                    $timeout(function () {
-                        $scope.successMsg = false;
-                    }, 1500);
-                } else {
-                    $scope.errorInfo = data.status.info;
-                    $scope.errorMsg = true;
-                }
-            });
-    };
-
-    $scope.errorMsgClose = function() {
-        $scope.errorMsg = false;
     }
+					
 });
 
-app.controller('permissionsController', function ($scope, $http, $timeout, dataShare) {
+app.controller('reportsController', function ($scope, $http, $location, $timeout, dataShare) {
     $scope.dataShare = dataShare;
+	if (dataShare.get()==null) { $location.path(''); return; }
+	
+	$scope.reports = [{id:0, title:'דוח זמינות באתרים',img:"1.png"}, {id:1, title:'דוח ניצול חודשי', img:"2.png"}, {id:2, title:'יצירת לו"ז עתידי', img:"3.png"}];
+
+	$scope.getReport = function (op) {
+		params = {'op': op};
+		dataShare.action('report', 'ca-report', params);
+    };
+
+});
+
+
+app.controller('settingsController', function ($scope, $http, $location, $timeout, dataShare) {
+    $scope.dataShare = dataShare;
+	if (dataShare.get()==null) { $location.path(''); return; }
+	
     var switchEnable = true;
-    var permissions = {};
-
-    dataShare.setSettings('permission_request', 0);
-
-    $scope.switchPermission = function (user) {
+	
+	$scope.settings = [{title:'התראה על אי שימוש במכונה למעלה מ-24 שעות',status:true}, {title:'התרעה על זמינות נמוכה מ-20% באתר', status:true}];
+	
+	$scope.switchSetting = function (setting) {
         if (switchEnable) {
             switchEnable = false;
             $timeout(function () { switchEnable = true; }, 500);
-            user.status = !user.status;
-            if (user.nId in permissions) delete permissions[user.nId];
-            else permissions[user.nId] = user.status;
+            setting.status = !setting.status;
         }
     };
 
     $scope.closePermissions = function (save) {
-        if (save) {
-            for (nId in permissions) {
-                $http.jsonp(domain + 'permissions.php?callback=JSON_CALLBACK&op=change&id=' + dataShare.get().id + '&nId=' + nId + '&status=' + permissions[nId]).success(function (data) { });
-            }
-        }
-        dataShare.action('statusList', 'notifications');
+        dataShare.changePage();
     };
 });
 
-app.controller('trackingController', function ($scope, $http, $timeout, $location, dataShare) {
+app.controller('notificationsController', function ($scope, $http, $location, $timeout, dataShare) {
     $scope.dataShare = dataShare;
     if (dataShare.get()==null) { $location.path(''); return; }
-
-    $scope.dayInfo = null;
-
-    var eventsColors = ['green', 'purple', 'red', 'purple', 'green', 'green', 'purple', 'red', 'red', 'red', 'purple', 'orange', 'regular'];
-    var historyCallback = function (data) {
-        $scope.highlightDays = [];
-        for (var i = 0; i < data.reported.length; i++) {
-            var status = (data.reported[i].status<=10)?data.reported[i].status:11;
-            $scope.highlightDays.push({
-                date: data.reported[i].day,
-                css: eventsColors[status],
-                selectable: false,
-                title: ''
-            });
-        }
-    };
-
-    $http.jsonp(domain + 'history.php?callback=JSON_CALLBACK&id=' + dataShare.get().id).success(historyCallback);
-
-    var wp = null;
-    $scope.logMonthChanged = function (newMonth, oldMonth) {
-        $scope.infoShow = false;
-        $timeout.cancel(wp);
-        wp = $timeout(function () {
-            $http.jsonp(domain + 'history.php?callback=JSON_CALLBACK&id=' + dataShare.get().id + '&month=' + newMonth.format('YYYY-MM')).success(historyCallback);
-        }, 350);
-    };
-
-    var loadDayInfo = function () {
-        $http.jsonp(domain + 'history.php?callback=JSON_CALLBACK&id=' + dataShare.get().id + '&day=' + selectedDay.format('YYYY-MM-DD'))
-            .success(function (data) {
-                data.status = (data.status<=10)?data.status:11;
-                $scope.infoBg = eventsColors[data.status];
-                $scope.dayInfo = data;
-                $scope.addAttach = false;
-                $scope.infoMessage = '';
-                if (eventsColors[data.status] == 'red') {
-                    if (data.attach) $scope.infoMessage = 'הצג אישור';
-                    else $scope.infoMessage = '[צרף אישור]';
-                } else {
-                    $scope.infoMessage = (data.info != '') ? data.info : 'אין הערות';
-                }
-            });
-    }
-
-    var selectedDay = null;
-    $scope.daySelected = function (event, date) {
-        event.preventDefault(); // prevent the select to happen
-        selectedDay = date;
-        loadDayInfo();
-        $scope.xinfo = (event.x - 42.5) + "px";
-        $scope.yinfo = (event.y - 42.5) + "px";
-        $scope.infoShow = true;
-    };
-
-    $scope.infoSelected = function () {
-        if ($scope.dayInfo.attach) {
-            var url = domain + 'attachments.php?callback=JSON_CALLBACK&id=' + dataShare.get().id + '&day=' + selectedDay.format('YYYY-MM-DD');
-            window.open(url, '_system', 'location=no');
-        } else if (eventsColors[$scope.dayInfo.status] == 'red') {
-            var url = domain + 'upload.html#/' + dataShare.get().id + '/' + selectedDay.format('YYYY-MM-DD');
-            window.open(url, '_system', 'location=no');
-            $scope.closeInfo();
-        }
-    };
-
-    $scope.closeInfo = function () {
-        $scope.infoShow = false;
-    };
-
-    $scope.deleteAttachment = function () {
-        $http.jsonp(domain + 'report.php?callback=JSON_CALLBACK&id=' + dataShare.get().id + '&day=' + selectedDay.format('YYYY-MM-DD') + '&attach=&oper=0')
-            .success(function (data) {
-                loadDayInfo();
-            });
-    }
-});
-
-app.controller('adminController', function ($scope, $http, $timeout, dataShare) {
-    $scope.dataShare = dataShare;
-    $scope.approvalShow = false;
-    $scope.todayReport = true;
-    var switchEnable = true;
-
-    $scope.switchOp = function (id) {
-        if (switchEnable) {
-            switchEnable = false;
-            $timeout(function () {
-                switchEnable = true;
-            }, 500);
-            dataShare.setLoading(true);
-            $http.jsonp(domain + 'lock.php?callback=JSON_CALLBACK&id=' + dataShare.get().id + '&op=' + !dataShare.get().lock)
-                .success(function (data) {
-                    dataShare.setLoading(false);
-                    dataShare.set(data);
-                });
-        }
-    };
-
-    $scope.toggleSelection = function (u_id) {
-        var idx = $scope.selection.indexOf(u_id);
-        if (idx > -1) $scope.selection.splice(idx, 1);
-        else $scope.selection.push(u_id);
-    };
-
-    //var qrlen = 0;
-    //var index = 0;
-    var pagePromise = null;
-    var qrLoop = function() {
-        if (index==qrlen-1) index = 0;
-        else index += 1;
-        $scope.qr_url = qr_url_base + index;
-        pagePromise = $timeout(function () {
-            qrLoop();
-        }, 4000);
-    };
-
-    var changeQR = function(day) {
-        if (day==null) day='';
-        $scope.qr_url = 'assets/status_none.png';
-        qr_url_base = domain + 'get_qr.php?id='+dataShare.get().id+day+'&op=';
-        $http.jsonp(qr_url_base+'qrlen&callback=JSON_CALLBACK')
-            .success(function (data) {
-                qrlen=data.len;
-                index=-1;
-                $timeout.cancel(pagePromise);
-                qrLoop();
-            });
-    };
-    changeQR();
-
-    $scope.showApprovals = function() {
-        dataShare.setLoading(true);
-        $http.jsonp(domain+'approvals.php?callback=JSON_CALLBACK&op=get&id='+dataShare.get().id)
-            .success(function (data) {
-                $scope.approvalUsers = data;
-                dataShare.setLoading(false);
-                $scope.approvalShow = true;
-            });
-    };
-
-    $scope.return = function() {
-        $scope.approvalShow = false;
-    };
-
-    $scope.reportByDate = function()
-    {
-        if ($scope.todayReport) $scope.reportCalanderShow = true;
-        else changeQR();
-
-        $scope.todayReport = !$scope.todayReport;
-    };
-
-    $scope.dayReport = function(event, date) {
-        event.preventDefault(); // prevent the select to happen
-        changeQR('&day='+date.format('YYYY-MM-DD'));
-        $scope.reportCalanderShow = false;
-    };
-
-    /*
-    $scope.daySelected = function (event, date) {
-        event.preventDefault(); // prevent the select to happen
-        //selectedDay = date;
-        loadDayInfo();
-        $scope.xinfo = (event.x - 42.5) + "px";
-        $scope.yinfo = (event.y - 42.5) + "px";
-        $scope.infoShow = true;
-    };
-    */
-
-    var refresh = function () {
-        $scope.user_name = '';
-        $scope.user_phone = '';
-        $scope.user_isManager = false;
-        $scope.selection = [];
-    };
-
-    refresh();
-    $scope.editUsers = function () {
-        var newUser = '';
-        var deletedIds = '';
-        if ($scope.user_name != '' && $scope.user_phone != '') {
-            newUser = '&name=' + $scope.user_name + '&phone=' + $scope.user_phone + '&manager=' + $scope.user_isManager;
-        }
-        if ($scope.selection.length > 0) {
-            deletedIds = '&deleted=';
-            for (index = 0; index < $scope.selection.length; ++index) deletedIds += $scope.selection[index] + ';';
-        }
-
-        if (newUser != '' || deletedIds != '') {
-            dataShare.setLoading(true);
-            $http.jsonp(domain + 'users.php?callback=JSON_CALLBACK&id=' + dataShare.get().id + newUser + deletedIds)
-                .success(function (data) {
-                    dataShare.setLoading(false);
-                    dataShare.set(data);
-                    refresh();
-                });
-        }
-    };
-
-    $scope.deleteFormsRequests = function () {
-        var deletedIds = '';
-        if ($scope.selection.length > 0) {
-            deletedIds = '&deleted=';
-            for (index = 0; index < $scope.selection.length; ++index) deletedIds += $scope.selection[index] + ';';
-        }
-
-        if (deletedIds != '') {
-            dataShare.setLoading(true);
-            $http.jsonp(domain + 'forms.php?callback=JSON_CALLBACK&id=' + dataShare.get().id + deletedIds)
-                .success(function (data) {
-                    dataShare.setLoading(false);
-                    dataShare.set(data);
-                    refresh();
-                });
-        }
-    }
-
-
-    $scope.systemMessage = dataShare.get().message;
-    $scope.editMessage = function () {
-        if ($scope.systemMessage != '') {
-            dataShare.setLoading(true);
-            $http.jsonp(domain + 'message.php?callback=JSON_CALLBACK&id=' + dataShare.get().id + '&op=new&msg=' + encodeURIComponent($scope.systemMessage))
-                .success(function (data) {
-                    dataShare.setLoading(false);
-                    dataShare.set(data);
-                });
-        }
-    };
-
-    $scope.resetReaders = function () {
-        dataShare.setLoading(true);
-        $http.jsonp(domain + 'message.php?callback=JSON_CALLBACK&id=' + dataShare.get().id + '&op=reset')
-            .success(function (data) {
-                dataShare.setLoading(false);
-                dataShare.set(data);
-            });
-    }
-
 });
 
 angular.module('app').config(function ($mdDateLocaleProvider) {

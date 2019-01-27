@@ -1,0 +1,8 @@
+<div class="statusList-header">דוחות
+	<div class="statusList-rightOpt" ng-click="dataShare.changePage()"><</div>
+	<div class="statusList-leftOpt" ng-click=""></div>
+</div><br />
+<div class="statusList-info" ng-cloak>
+    <div class="statusList-users" ng-repeat="report in reports"><div class="statusList-user" ng-click="getReport(report.id)"><img class="statusList-userImg" width="40" ng-src="assets/reports/{{report.img}}" /> {{ report.title }}</div></div>
+</div>
+<div ng-include="'pages/loader.html'"></div>

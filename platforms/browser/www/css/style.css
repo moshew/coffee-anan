@@ -151,8 +151,7 @@ div{
 }
 
 .home-logo {
-    margin-top:105px;
-    margin-bottom:25px;
+    margin-top:35px;
 }
 
 .home-footer {
@@ -400,9 +399,9 @@ div{
 
 .popupMsg_infoMsg {
     position: absolute;
-    top: 100px;
+    top: 150px;
     right: 50%;
-    margin-right: -146px;
+    margin-right: -125px;
     -webkit-transition: linear 0.4s;
     transition: linear 0.4s;
 }
@@ -417,16 +416,48 @@ div{
     width: 255px;
     height: 55px;
     line-height: 55px;
-    font-size: 120%;
-    color: red;
+    font-size: 80%;
+    /*color: red;*/
     -webkit-transition: linear 0.4s;
     transition: linear 0.4s;
 }
 
-#middle_line {
+.ca-sitestockupdate {
+	border-style: solid;
+	border-radius: 5px;
+	margin: 0 auto;
+	width: 250px;
+	height: 120px;
+	background-color: #234a7d;
+	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+	
+}
+
+.ca-sitestockupdatetitle {
+	margin-top: 20px;
+	display: inline-block;
+}
+
+.ca-sitestockupdateval {
+	bolder-radius: 5px;
+	margin-top: 3px;
+	margin-right: 10px;
+	display: inline-block;
+}
+
+.ca-sitestockupdatebtn {
+    margin-top: 30px;
+	margin-right: 2px;
+	margin-left: 2px;
+	border-radius: 5px;
+    width: 75px;
+    height: 25px;
+    background:#ef3a28;
+	text-align: center;
+    font-size: 100%;
     display: inline-block;
-    vertical-align: middle;
-    line-height: normal;
+    -webkit-transition: linear 0.4s;
+    transition: linear 0.4s;
 }
 
 .popupMsg_closeBtn {
@@ -510,6 +541,15 @@ div{
     display: inline-block;
 }
 
+.ca-reportheader {
+    width:98%;
+    margin-bottom: 10px;
+    text-align:center;
+    font-size:130%;
+    background: #4b688e;
+    display: inline-block;
+}
+
 .ca-sitesheader {
     width:98%;
     margin-bottom: 10px;
@@ -524,6 +564,103 @@ div{
     margin-left: 20px;
     margin-top: 7px;
     font-size:140%;
+}
+
+.ca-sitename {
+	margin-top: 10px;
+	margin-right: 20px;
+	text-align:right;
+}
+
+.ca-sitenametitle {
+	font-size: 75%;
+}
+
+.ca-sitenameval {
+	font-size: 120%;
+}
+
+.ca-siteheader {
+    width:60%;
+	text-align: right;
+	margin: 20px 0 10px 0;
+	padding-right: 10px;
+    font-size:120%;
+    background: #4b6880;
+}
+
+.ca-sitestock {
+	width:300px;
+	margin-right: 25px;
+	font-size: 120%;
+	text-align:right;
+	
+}
+
+.ca-sitestocktitle {
+	width: 130px;
+	display: inline-block;
+}
+
+.ca-sitestockval {
+	display: inline-block;
+}
+
+.ca-sitestockbtn {
+    margin: 10px 0;
+	padding: 0 10px;
+    /*border-radius: 5px;*/
+    border-width: 1px;
+    border-style: solid;
+    border-color: white;
+    background: #ef3a28;
+	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+}
+	
+.ca-siteproblems {
+	text-align: right;
+	margin-right: 20px;
+}
+.ca-sitemachines {
+    height:250px;
+    overflow-y: auto;
+}
+
+.ca-sitemachinesitem {
+	width: 80%;
+	text-align: right;
+	margin-right: 20px;
+    padding-bottom: 5px;
+    border-width: 1px;
+    border-color: #1d6c96;
+    border-style: none none solid none;
+}
+
+.ca-notifications {
+    text-align:right;
+    height:600px;
+    overflow-y: auto;
+}
+
+.ca-notificationsitem {
+	width: 90%;
+	text-align: right;
+	margin-right: 20px;
+    padding-bottom: 5px;
+	font-size: 130%;
+    border-width: 1px;
+    border-color: #1d6c96;
+    border-style: none none solid none;
+}
+
+.ca-notificationsitemimg {
+	margin-left: 5px;
+}
+
+.ca-notificationsiteml2 {
+	margin-right: 0px;
+	font-size:60%;
 }
 
 .statusList-leftOpt {
@@ -565,6 +702,13 @@ div{
     font-size:175%;
 }
 
+.ca_reportitem {
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 7px;
+    font-size:130%;
+}
+
 .statusList-user {
     padding-bottom: 7px;
     border-width: 1px;
@@ -580,6 +724,15 @@ div{
     margin-left: 10px;
     display: inline-block;
 }
+
+.ca-reportitemval
+{
+    width: 80px;
+    float: left;
+	text-align: left;
+    /*font-size:75%;*/
+}
+
 
 .statusList-delete
 {
@@ -634,16 +787,18 @@ div{
     color: #fffc0e;
 }
 
-.premmisions_user {
+.ca-settingsitem {
+	width: 70%;
     text-align:right;
-    margin-right: 4%;
+    margin-right: 2%;
     padding-bottom:2px;
     display: inline-block;
+	font-size: 70%;
 }
 
-.premmisions_switch {
+.ca-settingsswitch {
     text-align: left;
-    margin-left: 4%;
+    margin-left: 2%;
 }
 
 .yesno-switch {
