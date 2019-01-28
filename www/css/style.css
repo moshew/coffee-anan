@@ -21,10 +21,6 @@ pre {
     transition: linear 0.3s;
 }
 
-.pageMain.ng-hide {
-    margin-left: -100%;
-}
-
 .pageSecondary {
     position: absolute;
     width:100%;
@@ -58,13 +54,27 @@ div{
     /*zoom: 100%;*/
     position:absolute;
     top:0;
-    bottom:0;
+    left:0;
     width:100%;
+	height: 100%;
     padding-top:0px;
     text-align:center;
     outline: none;
     color: white;
     background:#234a7d;
+	
+	/*backface-visibility*/
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+            backface-visibility: hidden;
+    /*perspective*/
+    -webkit-perspective: 1000;
+       -moz-perspective: 1000;
+        -ms-perspective: 1000;
+         -o-perspective: 1000;
+            perspective: 1000;
 }
 
 .centered {
