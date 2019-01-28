@@ -5,22 +5,16 @@ var app = angular.module('app', ['ngRoute', 'ngAnimate', 'ngMaterial', 'angucomp
 
 app.run(function($http, $timeout, dataShare) {
     var id = window.localStorage.getItem("id");
-    $http.jsonp(domain + 'login.php?callback=JSON_CALLBACK&id=' + id)
+    $http.jsonp(domain + 'ca-login.php?callback=JSON_CALLBACK&id=' + id)
         .success(function (data) {
             dataShare.set(data);
-            dataShare.register();
+			$timeout(function () {
+				if (data.ver <= 0.5) {
+					if (data.id == -1) dataShare.changePage(data, 'login');
+					else dataShare.changePage(data);
+				} else dataShare.action('versionUpdate', 'login');
+			}, 2000);
 
-            if (data.ver <= 1) {
-                if (data.id == -1) dataShare.changePage(data, 'login');
-                else if (data.settings.message_status==2) dataShare.action('message', 'message');
-                else {
-					//dataShare.changePage(data);
-					$timeout(function () {
-						dataShare.changePage(data);
-					}, 3 * 1000);
-					
-				}
-            } else dataShare.action('versionUpdate', 'login')
         });
 });
 
@@ -34,12 +28,12 @@ app.config(function ($routeProvider) {
         })
 
         .when('/versionUpdate', {
-            templateUrl: 'pages/versionUpdate.html',
+            templateUrl: 'pages/ca-versionUpdate.html',
             controller: 'mainController'
         })
 
         .when('/login', {
-            templateUrl: 'pages/login.html',
+            templateUrl: 'pages/ca-login.html',
             controller: 'loginController'
         })
 
@@ -117,47 +111,10 @@ app.factory('dataShare', function ($http, $location, $timeout, $window) {
         return Math.min(window.innerWidth/3.75, window.innerHeight/6.67);
     };
 
-    service.register = function() {
-		/*
-        if (this.data.id != -1) {
-            $timeout(function () {
-                try {
-                    window.plugins.OneSignal
-                        .startInit("9e0291cd-9d82-4a5e-a5c7-a2ad63a89e27")
-                        .handleNotificationOpened(service.notificationOpenedCallback)
-                        .endInit();
-
-                    $timeout(function () {
-                        try { window.plugins.OneSignal.sendTag("id", service.data.id); }
-                        catch (err) { }
-                    }, 1500);
-                }
-                catch (err) { }
-            }, 1000);
-        }
-		*/
-    };
-
-	/*
-    service.notificationOpenedCallback = function(jsonData) {
-    };
-	*/
-	
     service.changePage = function (data, path) {
-        this.mainPage = false;
         if (data!=null) this.set(data);
-        if (path == null) {
-            this.mainPage = true;
-			path = 'menu';
-        }
+        if (path == null) path = 'menu';
         $location.path(path);
-		/*
-        $timeout.cancel(pagePromise);
-        pagePromise = $timeout(function () {
-            this.mainPage = false;
-            $location.path('home');
-        }, 5 * 60 * 1000);
-		*/
     };
 
     service.action = function (oper, page, params) {
@@ -222,7 +179,7 @@ app.controller('mainController', function ($scope, $rootScope, $http, $window, $
     };
 });
 
-app.controller('loginController', function ($scope, $http, $mdDialog, dataShare) {
+app.controller('loginController', function ($scope, $http, dataShare) {
     $scope.dataShare = dataShare;
     $scope.loginState = 'code';
     $scope.message = 'הקש את קוד המשתמש לכניסה';
@@ -250,24 +207,22 @@ app.controller('loginController', function ($scope, $http, $mdDialog, dataShare)
 
         if ($scope.loginState == 'code' && $scope.index == 5) {
             dataShare.setLoading(true);
-            $http.jsonp(domain+'login.php?callback=JSON_CALLBACK&id=' + $scope.value)
+            $http.jsonp(domain+'ca-login.php?callback=JSON_CALLBACK&tid=' + $scope.value)
             .success(function (data) {
                 dataShare.setLoading(false);
                 refresh();
                 if (data.id != -1) {
                     window.localStorage.setItem("id", data.id);
                     dataShare.changePage(data);
-                    dataShare.register();
                 }
             });
 
         } else if ($scope.loginState == 'phone' && $scope.index == 10) {
             dataShare.setLoading(true);
-            $http.jsonp(domain+'send_code.php?callback=JSON_CALLBACK&p_id=' + $scope.value)
+            $http.jsonp(domain+'ca-sendcode.php?callback=JSON_CALLBACK&phone=' + $scope.value)
             .success(function (data) {
                 dataShare.setLoading(false);
                 $scope.sendCodeScreen = true;
-                $scope.loginCodeResponse = (data.status) ? 'found' : 'not-found';
             });
         }
     };

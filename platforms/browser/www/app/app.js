@@ -17,7 +17,7 @@ app.run(function($http, $timeout, dataShare) {
 					//dataShare.changePage(data);
 					$timeout(function () {
 						dataShare.changePage(data);
-					}, 3 * 1000);
+					}, 2000);
 					
 				}
             } else dataShare.action('versionUpdate', 'login')

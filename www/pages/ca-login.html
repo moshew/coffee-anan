@@ -1,5 +1,4 @@
-﻿<div ng-cloak class="centered login">
-	{{}}
+﻿<div ng-cloak class="centered login" dir="ltr">
     <div class="login-header">
         <div>{{message}}</div>
         <span ng-show="loginState=='code'"><div ng-class="{'login-circle':fills[0].value, 'login-circle border':!fills[0].value}"></div><div ng-class="{'login-circle':fills[1].value, 'login-circle border':!fills[1].value}"></div><div ng-class="{'login-circle':fills[2].value, 'login-circle border':!fills[2].value}"></div><div ng-class="{'login-circle':fills[3].value, 'login-circle border':!fills[3].value}"></div><div ng-class="{'login-circle':fills[4].value, 'login-circle border':!fills[4].value}"></div></span>
@@ -11,7 +10,7 @@
     <div class="login-btn" ng-click="sendCode()"><img ng-src="assets/login/btn11-{{loginState}}.png" /></div><div class="login-btn" ng-click="press(0)"><img ng-src="assets/login/btn10.png" /></div><div class="login-btn" ng-click="press('r')"><img src="assets/login/btn12.png" /></div><br />
     <div class="popupScreen" ng-show="sendCodeScreen">
         <div class="centered loginResult">
-            <img src="assets/login_{{loginCodeResponse}}.png" /><br>
+            <img src="assets/code_sent.png" /><br>
             <md-button class="md-raised md-warn login-back" ng-click="sendCode();sendCodeScreen=false">חזור</md-button>
         </div>
     </div>

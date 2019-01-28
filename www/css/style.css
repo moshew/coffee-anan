@@ -706,7 +706,14 @@ div{
     margin-right: 20px;
     margin-left: 20px;
     margin-top: 7px;
-    font-size:130%;
+    font-size:120%;
+}
+
+.ca_reportsitem {
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 7px;
+    font-size:135%;
 }
 
 .statusList-user {
