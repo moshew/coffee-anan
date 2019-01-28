@@ -2,7 +2,7 @@
 var domain = 'http://ikafe.tk/coffee-anan/srv/';
 
 var app = angular.module('app', ['ngRoute', 'ngAnimate', 'ngMaterial', 'angucomplete-alt', 'multipleDatePicker', 'ngMobile']);
-
+/*
 app.run(function($http, $timeout, dataShare) {
     var id = window.localStorage.getItem("id");
     $http.jsonp(domain + 'ca-login.php?callback=JSON_CALLBACK&id=' + id)
@@ -17,13 +17,13 @@ app.run(function($http, $timeout, dataShare) {
 
         });
 });
-
+*/
 // configure our routes
 app.config(function ($routeProvider) {
     $routeProvider
 
         .when('/', {
-            templateUrl: 'pages/ca-start.html',
+            templateUrl: 'pages/ca-home.html',
             controller: 'mainController'
         })
 
