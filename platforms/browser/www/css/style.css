@@ -21,10 +21,6 @@ pre {
     transition: linear 0.3s;
 }
 
-.pageMain.ng-hide {
-    margin-left: -100%;
-}
-
 .pageSecondary {
     position: absolute;
     width:100%;
@@ -58,13 +54,27 @@ div{
     /*zoom: 100%;*/
     position:absolute;
     top:0;
-    bottom:0;
+    left:0;
     width:100%;
-    padding-top:20px;
+	height: 100%;
+    padding-top:0px;
     text-align:center;
     outline: none;
     color: white;
     background:#234a7d;
+	
+	/*backface-visibility*/
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+         -o-backface-visibility: hidden;
+            backface-visibility: hidden;
+    /*perspective*/
+    -webkit-perspective: 1000;
+       -moz-perspective: 1000;
+        -ms-perspective: 1000;
+         -o-perspective: 1000;
+            perspective: 1000;
 }
 
 .centered {
@@ -151,8 +161,7 @@ div{
 }
 
 .home-logo {
-    margin-top:105px;
-    margin-bottom:25px;
+    margin-top:35px;
 }
 
 .home-footer {
@@ -310,16 +319,53 @@ div{
     margin-top: -220px;
 }
 
+.ca-menulogo {
+	margin-top: 20px;
+	margin-bottom: 25px;
+}
+.ca-menubtn {
+    border-radius: 5px;
+    margin: 8px 5px;
+    width: 140px;
+    height: 180px;
+    border-width: 1px;
+    border-style: solid;
+    /*border-color: #00aeef;*/
+    border-color: rgba(255,255,255,0.3);
+    display: inline-block;
+    /*font-size:120%;*/
+	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.ca-menubtnimg {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 120px;
+	height: 120px;
+	
+}
+
+.ca-menubtnlbl {
+	font-size: 130%;
+}
+
+.ca-menucw {
+	position: absolute;
+	font-size: 10px;
+	bottom: 5px;
+	left: 10px;
+}
 .report-btn {
     border-radius: 5px;
-    margin: 8px;
-    width: 78px;
-    height: 85px;
+    margin: 5px;
+    width: 150px;
+    height: 160px;
     border-width: 1px;
     border-style: solid;
     border-color: #00aeef;
     display: inline-block;
     /*font-size:120%;*/
+	padding: 10px;
 }
 
 .report-btnLabel {
@@ -363,9 +409,9 @@ div{
 
 .popupMsg_infoMsg {
     position: absolute;
-    top: 100px;
+    top: 150px;
     right: 50%;
-    margin-right: -146px;
+    margin-right: -125px;
     -webkit-transition: linear 0.4s;
     transition: linear 0.4s;
 }
@@ -380,16 +426,48 @@ div{
     width: 255px;
     height: 55px;
     line-height: 55px;
-    font-size: 120%;
-    color: red;
+    font-size: 80%;
+    /*color: red;*/
     -webkit-transition: linear 0.4s;
     transition: linear 0.4s;
 }
 
-#middle_line {
+.ca-sitestockupdate {
+	border-style: solid;
+	border-radius: 5px;
+	margin: 0 auto;
+	width: 250px;
+	height: 120px;
+	background-color: #234a7d;
+	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+	
+}
+
+.ca-sitestockupdatetitle {
+	margin-top: 20px;
+	display: inline-block;
+}
+
+.ca-sitestockupdateval {
+	bolder-radius: 5px;
+	margin-top: 3px;
+	margin-right: 10px;
+	display: inline-block;
+}
+
+.ca-sitestockupdatebtn {
+    margin-top: 30px;
+	margin-right: 2px;
+	margin-left: 2px;
+	border-radius: 5px;
+    width: 75px;
+    height: 25px;
+    background:#ef3a28;
+	text-align: center;
+    font-size: 100%;
     display: inline-block;
-    vertical-align: middle;
-    line-height: normal;
+    -webkit-transition: linear 0.4s;
+    transition: linear 0.4s;
 }
 
 .popupMsg_closeBtn {
@@ -473,6 +551,128 @@ div{
     display: inline-block;
 }
 
+.ca-reportheader {
+    width:98%;
+    margin-bottom: 10px;
+    text-align:center;
+    font-size:130%;
+    background: #4b688e;
+    display: inline-block;
+}
+
+.ca-sitesheader {
+    width:98%;
+    margin-bottom: 10px;
+    text-align:center;
+    font-size:150%;
+    background: #4b688e;
+    display: inline-block;
+}
+
+.ca-siteslistitem {
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 7px;
+    font-size:140%;
+}
+
+.ca-sitename {
+	margin-top: 10px;
+	margin-right: 20px;
+	text-align:right;
+}
+
+.ca-sitenametitle {
+	font-size: 75%;
+}
+
+.ca-sitenameval {
+	font-size: 120%;
+}
+
+.ca-siteheader {
+    width:60%;
+	text-align: right;
+	margin: 20px 0 10px 0;
+	padding-right: 10px;
+    font-size:120%;
+    background: #4b6880;
+}
+
+.ca-sitestock {
+	width:300px;
+	margin-right: 25px;
+	font-size: 120%;
+	text-align:right;
+	
+}
+
+.ca-sitestocktitle {
+	width: 130px;
+	display: inline-block;
+}
+
+.ca-sitestockval {
+	display: inline-block;
+}
+
+.ca-sitestockbtn {
+    margin: 10px 0;
+	padding: 0 10px;
+    /*border-radius: 5px;*/
+    border-width: 1px;
+    border-style: solid;
+    border-color: white;
+    background: #ef3a28;
+	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+}
+	
+.ca-siteproblems {
+	text-align: right;
+	margin-right: 20px;
+}
+.ca-sitemachines {
+    height:250px;
+    overflow-y: auto;
+}
+
+.ca-sitemachinesitem {
+	width: 80%;
+	text-align: right;
+	margin-right: 20px;
+    padding-bottom: 5px;
+    border-width: 1px;
+    border-color: #1d6c96;
+    border-style: none none solid none;
+}
+
+.ca-notifications {
+    text-align:right;
+    height:600px;
+    overflow-y: auto;
+}
+
+.ca-notificationsitem {
+	width: 90%;
+	text-align: right;
+	margin-right: 20px;
+    padding-bottom: 5px;
+	font-size: 130%;
+    border-width: 1px;
+    border-color: #1d6c96;
+    border-style: none none solid none;
+}
+
+.ca-notificationsitemimg {
+	margin-left: 5px;
+}
+
+.ca-notificationsiteml2 {
+	margin-right: 0px;
+	font-size:60%;
+}
+
 .statusList-leftOpt {
     float: left;
     width:85px;
@@ -512,6 +712,20 @@ div{
     font-size:175%;
 }
 
+.ca_reportitem {
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 7px;
+    font-size:120%;
+}
+
+.ca_reportsitem {
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 7px;
+    font-size:135%;
+}
+
 .statusList-user {
     padding-bottom: 7px;
     border-width: 1px;
@@ -527,6 +741,15 @@ div{
     margin-left: 10px;
     display: inline-block;
 }
+
+.ca-reportitemval
+{
+    width: 80px;
+    float: left;
+	text-align: left;
+    /*font-size:75%;*/
+}
+
 
 .statusList-delete
 {
@@ -581,16 +804,18 @@ div{
     color: #fffc0e;
 }
 
-.premmisions_user {
+.ca-settingsitem {
+	width: 70%;
     text-align:right;
-    margin-right: 4%;
+    margin-right: 2%;
     padding-bottom:2px;
     display: inline-block;
+	font-size: 70%;
 }
 
-.premmisions_switch {
+.ca-settingsswitch {
     text-align: left;
-    margin-left: 4%;
+    margin-left: 2%;
 }
 
 .yesno-switch {
