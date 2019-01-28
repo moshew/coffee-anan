@@ -10,9 +10,9 @@ app.run(function($http, $timeout, dataShare) {
             dataShare.set(data);
 			$timeout(function () {
 				if (data.ver <= 0.5) {
-					if (data.id == -1) dataShare.changePage(data, 'login');
+					if (data.id == -1) dataShare.action('login');
 					else dataShare.changePage(data);
-				} else dataShare.action('versionUpdate', 'login');
+				} else dataShare.action('versionUpdate');
 			}, 2000);
 
         });
@@ -118,18 +118,20 @@ app.factory('dataShare', function ($http, $location, $timeout, $window) {
     };
 
     service.action = function (oper, page, params) {
-        params = (params==null)?'':'&'+Object.keys(params).map(function(k) { return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]) }).join('&');
-        url = domain + page + '.php?callback=JSON_CALLBACK&id=' + this.get().id + params;
-        service.setLoading(true);
-        $http.jsonp(url)
-        .success(function (data) {
-            service.setLoading(false);
-            if (oper=='main') service.changePage(data);
-            else service.changePage(data, oper);
-        })
-        .error(function (data) {
-            service.setLoading(false);
-        });
+		if (page == null) service.changePage(null, oper);
+		else {
+			params = (params==null)?'':'&'+Object.keys(params).map(function(k) { return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]) }).join('&');
+			url = domain + page + '.php?callback=JSON_CALLBACK&id=' + this.get().id + params;
+			service.setLoading(true);
+			$http.jsonp(url)
+			.success(function (data) {
+				service.setLoading(false);
+				service.changePage(data, oper);
+			})
+			.error(function (data) {
+				service.setLoading(false);
+			});
+		}
     };
 
     var _loading = false;
@@ -246,7 +248,7 @@ app.controller('menuController', function ($scope, $http, $location, dataShare, 
 
     $scope.myStyle = [null,null,null,null];
 
-	var pages = [['sites','ca-sites'], ['notifications','ca-notifications'], ['reports','ca-settings'], ['settings','ca-settings']];
+	var pages = [['sites','ca-sites'], ['notifications','ca-notifications'], ['reports'], ['settings','ca-settings']];
     $scope.report = function (option) {
 		$scope.myStyle[option] = { 'background-color': 'rgba(0,0,0,0.2' };
 		dataShare.action(pages[option][0], pages[option][1]);
