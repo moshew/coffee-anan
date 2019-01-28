@@ -2,7 +2,7 @@
 var domain = 'http://ikafe.tk/coffee-anan/srv/';
 
 var app = angular.module('app', ['ngRoute', 'ngAnimate', 'ngMaterial', 'angucomplete-alt', 'multipleDatePicker', 'ngMobile']);
-
+/*
 app.run(function($http, $timeout, dataShare) {
     var id = window.localStorage.getItem("id");
     $http.jsonp(domain + 'ca-login.php?callback=JSON_CALLBACK&id=' + id)
@@ -17,7 +17,7 @@ app.run(function($http, $timeout, dataShare) {
 
         });
 });
-
+*/
 // configure our routes
 app.config(function ($routeProvider) {
     $routeProvider
@@ -159,6 +159,21 @@ app.controller('mainController', function ($scope, $rootScope, $http, $window, $
     $scope.dataShare = dataShare;
     $scope.zoomFactor = dataShare.getZoomFactor();
 
+	var id = window.localStorage.getItem("id");
+    $http.jsonp(domain + 'ca-login.php?callback=JSON_CALLBACK&id=' + id)
+        .success(function (data) {
+            //dataShare.set(data);
+			$timeout(function () {
+				if (data.ver <= 0.5) {
+					if (data.id == -1) dataShare.changePage(data, 'login');
+					else dataShare.changePage(data);
+				} else dataShare.action('versionUpdate');
+			}, 2000);
+
+        });
+
+		
+		
     $scope.enter = function (admin) {
         dataShare.setLoading(true);
         $http.jsonp(domain + 'login.php?callback=JSON_CALLBACK&id=' + dataShare.get().id)
