@@ -31,14 +31,14 @@
   <icon src="res/icon.png"/>
   <splash src="res/splash.png"/>
   <platform name="android">
-    <icon src="res/icon/android/icon-36-ldpi.png" density="ldpi"/>
-    <icon src="res/icon/android/icon-48-mdpi.png" density="mdpi"/>
-    <icon src="res/icon/android/icon-72-hdpi.png" density="hdpi"/>
-    <icon src="res/icon/android/icon-96-xhdpi.png" density="xhdpi"/>
-    <splash src="res/screen/android/screen-ldpi-portrait.png" density="port-ldpi"/>
-    <splash src="res/screen/android/screen-mdpi-portrait.png" density="port-mdpi"/>
-    <splash src="res/screen/android/screen-hdpi-portrait.png" density="port-hdpi"/>
-    <splash src="res/screen/android/screen-xhdpi-portrait.png" density="port-xhdpi"/>
+    <icon width="36" height="36" platform="android" src="res/icon/android/icon-36-ldpi.png" density="ldpi"/>
+    <icon width="48" height="48" platform="android" src="res/icon/android/icon-48-mdpi.png" density="mdpi"/>
+    <icon width="72" height="72" platform="android" src="res/icon/android/icon-72-hdpi.png" density="hdpi"/>
+    <icon width="96" height="96" platform="android" src="res/icon/android/icon-96-xhdpi.png" density="xhdpi"/>
+    <splash width="200" height="320" platform="android" src="res/screen/android/screen-ldpi-portrait.png" density="port-ldpi"/>
+    <splash width="320" height="480" platform="android" src="res/screen/android/screen-mdpi-portrait.png" density="port-mdpi"/>
+    <splash width="480" height="800" platform="android" src="res/screen/android/screen-hdpi-portrait.png" density="port-hdpi"/>
+    <splash width="720" height="1280" platform="android" src="res/screen/android/screen-xhdpi-portrait.png" density="port-xhdpi"/>
   </platform>
   <platform name="ios">
     <icon height="57" platform="ios" src="res/icon/ios/icon.png" width="57" />
