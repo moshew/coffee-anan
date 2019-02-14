@@ -23,7 +23,7 @@ app.config(function ($routeProvider) {
     $routeProvider
 
         .when('/', {
-            templateUrl: 'pages/ca-home.html',
+            templateUrl: 'pages/ca-menu.html',
             controller: 'mainController'
         })
 
@@ -173,13 +173,10 @@ app.controller('mainController', function ($scope, $rootScope, $http, $window, $
     $http.jsonp(domain + 'ca-login.php?callback=JSON_CALLBACK&id=' + id)
         .success(function (data) {
             //dataShare.set(data);
-			$timeout(function () {
-				if (data.ver <= 0.5) {
-					if (data.id == -1) dataShare.changePage("login", data);
-					else dataShare.changePage("menu", data);  //#####
-				} else dataShare.action('versionUpdate');
-			}, 100); //###
-
+			if (data.ver <= 0.5) {
+				if (data.id == -1) dataShare.changePage("login", data);
+				else dataShare.changePage("menu", data);  //#####
+			} else dataShare.action('versionUpdate');
         });
 
 		
