@@ -2,7 +2,7 @@
 	<div class="statusList-rightOpt" ng-click="dataShare.action('site')"><</div>
 	<div class="statusList-leftOpt" ng-click=""></div>
 </div><br />
-<div class="statusList-info" ng-cloak>
+<div class="ca-machinesList" ng-cloak>
     <div class="ca-siteslistitem" ng-repeat="machine in dataShare.get().machines">
 		<div class="statusList-user">
 			<div ng-click="descShow[machine.id]=!descShow[machine.id]">
@@ -12,6 +12,15 @@
 					<div class="ca-machinedrink" ng-repeat="drink in machine.drinks">
 						<div class="ca-machinedrinkborder"><img class="ca-machinedrinkimg" ng-src="assets/drinks/{{drink.id}}.png" /><div class="ca-machinedrinklbl">{{drink.title}}</div></div>
 					</div>
+					<div class="ca-machinecleanline"></div>
+					<div class="ca-machineclean"><img class="ca-machinecleanimg" src="assets/drinks/cleaning_icon.png" />ניקיון כללי: {{machine.clean.cleanings}}, (רמת נוכחית: {{machine.clean.cleaning_level}}%)</div><div>
+					<div class="ca-machineclean"><img class="ca-machinecleanimg" src="assets/drinks/filterchange_alert.png" />החלפת מסנן: {{machine.clean.filter_changes}}, (שימוש נוכחי: {{machine.clean.filter_level}}%)</div>
+					<div class="ca-machineclean"><img class="ca-machinecleanimg" src="assets/drinks/descaling_icon.png" />ניקיון אבנית: {{machine.clean.decalcifications}}</div>
+					<div class="ca-machineclean"><img class="ca-machinecleanimg" src="assets/drinks/milk.png" />ניקיון מערכת החלב: {{machine.clean.milk_Cleanings}}</div>
+					<!--
+					<div class="ca-machinedrink"><div class="ca-machinecleanborder"><img class="ca-machinedrinkimg" ng-src="assets/drinks/cleaning_icon.png" /><div class="ca-machinedrinklbl">clean</div></div></div>
+					<div class="ca-machinedrink"><div class="ca-machinecleanborder"><img class="ca-machinedrinkimg" ng-src="assets/drinks/filterchange_alert.png" /><div class="ca-machinedrinklbl">clean</div></div></div>
+					-->
 				</div>
 			</div>
 		</div>
