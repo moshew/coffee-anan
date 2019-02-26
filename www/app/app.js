@@ -23,7 +23,7 @@ app.config(function ($routeProvider) {
     $routeProvider
 
         .when('/', {
-            templateUrl: 'pages/ca-menu.html',
+            templateUrl: 'pages/ca-home.html',
             controller: 'mainController'
         })
 
