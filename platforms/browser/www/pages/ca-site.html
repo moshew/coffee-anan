@@ -1,8 +1,15 @@
 <div class="ca-sitesheader">פרטי אתר
-	<div class="statusList-rightOpt" ng-click="dataShare.action('sites', 'ca-sites')"><</div>
+	<div class="statusList-rightOpt" ng-click="dataShare.action('sites', 'ca-sites')"><img src="assets/back.png" /></div>
 	<div class="statusList-leftOpt" ng-click=""></div>
 </div><br />
-<div class="ca-sitename"><div class="ca-sitenametitle">שם האתר: </div><div class="ca-sitenameval">{{dataShare.get().site.title}}</div></div>
+<div dir="rtl">
+<div class="ca-sitename">
+	<div class="ca-sitenametitle">שם האתר: </div>
+	<div class="ca-sitenameval">
+		{{dataShare.get().site.title}}&ensp;
+		[<span class="ca-sitenamelink" ng-click="dataShare.changePage('machines')"> הצג מכונות </span>]
+	</div>
+</div>
 <div class="ca-siteheader">מלאי באתר</div>
 <div class="ca-sitestock">
 	<div class="ca-sitestocktitle">סה"כ מלאי </div><div class="ca-sitestockval">{{dataShare.get().site.stock}} פעימות</div>
@@ -11,7 +18,11 @@
 	<div class="ca-sitestockbtn" ng-click="errorMsg=true">עדכן מלאי</div>
 </div>
 <div class="ca-siteheader">תקלות</div>
-<div class="ca-siteproblems">אין תקלות ידועות</div>
+<div class="ca-siteproblems">
+	<div ng-if="dataShare.get().site.messages.length==0">אין תקלות ידועות</div>
+	<div class="ca-siteproblemitem" ng-repeat="message in dataShare.get().site.messages"><div class="ca-siteproblemstitle">{{message.title}}</div>{{message.content}}</div>
+</div>
+<!--
 <div class="ca-siteheader">מכונות</div>
 <div class="ca-sitemachines">
 	<div class="ca-sitemachinesitem" ng-repeat="machine in dataShare.get().machines">
@@ -19,6 +30,8 @@
 			<div ng-if="descShow[machine.id]" class="ca-sitemachinesitemdescr"> {{machine.descr}} </div>
 		</div>
 	</div>
+</div>
+-->
 </div>
 <div ng-include="'pages/ca-sitestock.html'"></div>
 <div ng-include="'pages/loader.html'"></div>

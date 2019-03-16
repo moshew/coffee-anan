@@ -1,4 +1,10 @@
-﻿div:focus, div:active, span:focus, span:active, img:focus, img:active {
+﻿body {
+	background: #4B79A1;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to top, #283E51, #4B79A1);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to top, #283E51, #4B79A1); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+div:focus, div:active, span:focus, span:active, img:focus, img:active {
     outline: none;
     -webkit-tap-highlight-color:  rgba(0, 0, 0, 0);
     -webkit-tap-highlight-color: transparent;
@@ -61,8 +67,13 @@ div{
     text-align:center;
     outline: none;
     color: white;
-    background:#234a7d;
+    /*background:#234a7d;*/
 	
+	background: #4B79A1;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to top, #283E51, #4B79A1);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to top, #283E51, #4B79A1); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	
+
 	/*backface-visibility*/
     -webkit-backface-visibility: hidden;
        -moz-backface-visibility: hidden;
@@ -107,6 +118,75 @@ div{
 {
     margin-top: 20px;
     font-size: 150%;
+}
+
+.ca-popupMsg {
+    position:absolute;
+    top:0;
+	left: 0;
+    width:100%;
+	height: 100%;
+    background:black;
+    opacity:0.5;
+}
+
+.ca-pageoptions {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 60%;
+	height: 75%;
+	opacity:1;
+	padding-top: 35px;
+	text-align: right;
+	font-size: 150%;
+	background: #4B79A1;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to top, #283E51, #4B79A1);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to top, #283E51, #4B79A1); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	border-style: none solid solid none;
+	border-width: 1px;
+	border-color: rgba(255,255,255,0.3);
+	box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.1);
+	transition:0.2s linear all;
+}
+
+.ca-pageoptionstitle {
+	margin-right: 5%;
+}
+
+.ca-pageoptionsform {
+	margin: 10px auto;
+	width: 90%
+	
+}
+
+.ca-pageoptionslabel {
+	font-size: 70%;
+}
+
+input[type=text] {
+  width: 100%;
+  padding-right: 5px;
+  font-size: 80%;
+  color: white;
+  margin: 2px 0;
+  border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  background: #4B79A1;
+}
+
+input[type=text]:focus {
+	outline: none;
+	border: 1px solid white;
+}
+
+.ca-pageoptionsubmit {
+	margin-top: 10px;
+	text-align: left;
+}
+
+.ca-pageoptions.ng-hide {
+    left: -60%;
 }
 
 .footer {
@@ -161,7 +241,7 @@ div{
 }
 
 .home-logo {
-    margin-top:35px;
+    margin-top:0px;
 }
 
 .home-footer {
@@ -203,7 +283,7 @@ div{
 }
 
 .login-circle {
-    background: #234a7d;
+	background: #4B79A1;
     border-radius: 50%;
     margin: 12px 9px 20px 9px;
     margin-bottom: 20px;
@@ -386,17 +466,6 @@ div{
     border-color: #00aeef;
     display: inline-block;
 }
-.popupMsg {
-    position:absolute;
-    top:0;
-    bottom: 0;
-    width:100%;
-    background:#234a7d;
-    opacity:0.8;
-    z-index:0;
-    -webkit-transition: linear 0.3s;
-    transition: linear 0.3s;
-}
 
 .reportOthers-page {
     position:absolute;
@@ -551,27 +620,25 @@ div{
     display: inline-block;
 }
 
-.ca-reportheader {
-    width:98%;
-    margin-bottom: 10px;
-    text-align:center;
-    font-size:130%;
-    background: #4b688e;
-    display: inline-block;
-}
-
 .ca-sitesheader {
-    width:98%;
+    width:100%;
+	margin-top: 0;
     margin-bottom: 10px;
     text-align:center;
     font-size:150%;
     background: #4b688e;
+	background: #0F2027;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     display: inline-block;
+}
+.ca-sitesheader.report {
+    font-size:130%;
 }
 
 .ca-siteslistitem {
     margin-right: 20px;
-    margin-left: 20px;
+    margin-left: 15px;
     margin-top: 7px;
     font-size:140%;
 }
@@ -590,10 +657,16 @@ div{
 	font-size: 120%;
 }
 
+.ca-sitenamelink {
+	cursor: pointer;
+	color: orange;
+	font-size: 80%;
+}
+
 .ca-siteheader {
     width:60%;
 	text-align: right;
-	margin: 20px 0 10px 0;
+	margin: 30px 0 10px 0;
 	padding-right: 10px;
     font-size:120%;
     background: #4b6880;
@@ -629,9 +702,22 @@ div{
 }
 	
 .ca-siteproblems {
+	height: 300px;
+	overflow-y: auto;
 	text-align: right;
 	margin-right: 20px;
+	margin-bottom: 25px;
 }
+
+.ca-siteproblemitem {
+	margin-bottom: 10px;
+}
+
+.ca-siteproblemstitle {
+	font-size: 75%;
+	margin-bottom: -3px;
+}
+
 .ca-sitemachines {
     height:250px;
     overflow-y: auto;
@@ -643,7 +729,8 @@ div{
 	margin-right: 20px;
     padding-bottom: 5px;
     border-width: 1px;
-    border-color: #1d6c96;
+    /*border-color: #1d6c96;*/
+	border-color: rgba(255,255,255,0.3);
     border-style: none none solid none;
 }
 
@@ -660,7 +747,8 @@ div{
     padding-bottom: 5px;
 	font-size: 130%;
     border-width: 1px;
-    border-color: #1d6c96;
+    /*border-color: #1d6c96;*/
+	border-color: rgba(255,255,255,0.3);
     border-style: none none solid none;
 }
 
@@ -678,7 +766,7 @@ div{
     width:85px;
     height:30px;
     text-align: left;
-    margin-top: 6px;
+    margin-top: 3px;
     margin-left: 10px;
     font-size: 70%;
     color: #00aeef;
@@ -729,7 +817,8 @@ div{
 .statusList-user {
     padding-bottom: 7px;
     border-width: 1px;
-    border-color: #1d6c96;
+    /*border-color: #1d6c96;*/
+	border-color: rgba(255,255,255,0.3);
     border-style: none none solid none;
 }
 
@@ -1219,3 +1308,70 @@ input[type="checkbox"]{
     resize: none;
 }
 
+.ca-machinesList {
+    text-align:right;
+    height:93%;
+    overflow-y: auto;
+}
+
+.ca-machinecount {
+	float:left;
+	margin-top: 6px;
+	margin-left: 10px;
+	font-size: 90%;
+}
+
+.ca-machinedrink {
+	display: inline-block;
+}
+
+.ca-machinedrinkborder {
+	border-radius: 5px;
+    margin: 0 0 7px 7px;
+    width: 77px;
+    height: 100px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(255,255,255,0.3);
+	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.ca-machinedrinkimg {
+	margin: 10px 10px;
+	width: 57px;
+	height: 57px;
+}
+
+.ca-machinedrinklbl {
+	text-align: center;
+	font-size: 50%;
+}
+
+.ca-machinecleanline {
+    padding-bottom: 7px;
+    border-width: 1px;
+	border-color: rgba(255,255,255,0.3);
+    border-style: none none solid none;
+}
+
+.ca-machinecleanborder {
+	border-radius: 5px;
+    margin: 0 0 7px 0px;
+    width: 161px;
+    height: 100px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(255,255,255,0.3);
+	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+
+}
+
+.ca-machineclean {
+	margin-top: 6px;
+	font-size: 60%;
+}
+
+.ca-machinecleanimg {
+	width: 20px;
+	margin-left: 7px;
+}

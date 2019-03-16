@@ -281,7 +281,34 @@ app.controller('machinesController', function ($scope, $http, $timeout, $locatio
     $scope.dataShare = dataShare;
     //if (dataShare.get()==null) { $location.path(''); return; }
 	$scope.stockupdateinp = {val: 2};
+	$scope.params = {newSiteName: ""};
 
+	$scope.back = function() {
+		dataShare.changePage();
+	};
+	
+	$scope.sitesOptions = function() {
+		$scope.sitesOp = true;
+	}
+	
+	$scope.exitOp = function() {
+		$scope.sitesOp = false;
+	}
+	
+	var secondTouch = false;
+	$scope.newSiteSubmit = function() {
+		secondTouch = !secondTouch;
+		if (!secondTouch) return;
+		
+		if ($scope.params.newSiteName=="") return;
+		$http.jsonp(domain + 'ca-newSite.php?callback=JSON_CALLBACK&id=' + dataShare.get().id + "&site=" + $scope.params.newSiteName)
+            .success(function (data) {
+				dataShare.setLoading(false);
+                dataShare.set(data);
+				$scope.exitOp();
+            });
+		
+	};
     $scope.siteStockUpdateCB = function(approve) {
 		if (!approve) {
 			$scope.errorMsg = false;
@@ -295,7 +322,7 @@ app.controller('machinesController', function ($scope, $http, $timeout, $locatio
                 dataShare.set(data);
                 $scope.errorMsg = false;
             });
-    }
+    };
 					
 });
 
@@ -338,9 +365,36 @@ app.controller('notificationsController', function ($scope, $http, $location, $t
     $scope.dataShare = dataShare;
     if (dataShare.get()==null) { $location.path(''); return; }
 });
-
+/*
 angular.module('app').config(function ($mdDateLocaleProvider) {
     $mdDateLocaleProvider.formatDate = function (date) {
         return moment(date).format('D/M/YYYY');
     };
 });
+*/
+app.directive( 'onTouch' , function(){
+  return {
+    restrict: 'A',
+    replace : true,
+    link :  function( scope , element , attribs ){
+      
+      var ontouchFn = scope.$eval( attribs.onTouch );
+      element.bind( 'touchstart' , function( e ){
+      
+          if ( e ) e.preventDefault();
+          scope.$apply(function() {
+             ontouchFn.call(scope, e.which);
+          });
+      } );
+      element.bind( 'click' , function( e ){
+      
+          if ( e ) e.preventDefault();
+          scope.$apply(function() {
+             ontouchFn.call(scope, e.which);
+          });
+      } );
+      
+    }
+  };
+  
+} );

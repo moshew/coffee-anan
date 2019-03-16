@@ -57,6 +57,11 @@ app.config(function ($routeProvider) {
             controller: 'machinesController'
         })
 
+        .when('/machines', {
+            templateUrl: 'pages/ca-machines.html',
+            controller: 'machinesController'
+        })
+
         .when('/notifications', {
             templateUrl: 'pages/ca-notifications.html',
             controller: 'notificationsController'
@@ -116,14 +121,14 @@ app.factory('dataShare', function ($http, $location, $timeout, $window) {
         return Math.min(window.innerWidth/3.75, window.innerHeight/6.67);
     };
 
-    service.changePage = function (data, path) {
-        if (data!=null) this.set(data);
+    service.changePage = function (path, data) {
         if (path == null) path = 'menu';
+        if (data!=null) this.set(data);
         $location.path(path);
     };
 
     service.action = function (oper, page, params) {
-		if (page == null) service.changePage(null, oper);
+		if (page == null) service.changePage(oper);
 		else {
 			params = (params==null)?'':'&'+Object.keys(params).map(function(k) { return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]) }).join('&');
 			url = domain + page + '.php?callback=JSON_CALLBACK&id=' + this.get().id + params;
@@ -131,7 +136,7 @@ app.factory('dataShare', function ($http, $location, $timeout, $window) {
 			$http.jsonp(url)
 			.success(function (data) {
 				service.setLoading(false);
-				service.changePage(data, oper);
+				service.changePage(oper, data);
 			})
 			.error(function (data) {
 				service.setLoading(false);
@@ -168,13 +173,10 @@ app.controller('mainController', function ($scope, $rootScope, $http, $window, $
     $http.jsonp(domain + 'ca-login.php?callback=JSON_CALLBACK&id=' + id)
         .success(function (data) {
             //dataShare.set(data);
-			$timeout(function () {
-				if (data.ver <= 0.5) {
-					if (data.id == -1) dataShare.changePage(data, 'login');
-					else dataShare.changePage(data);
-				} else dataShare.action('versionUpdate');
-			}, 2000);
-
+			if (data.ver <= 0.5) {
+				if (data.id == -1) dataShare.changePage("login", data);
+				else dataShare.changePage("menu", data);  //#####
+			} else dataShare.action('versionUpdate');
         });
 
 		
@@ -185,7 +187,7 @@ app.controller('mainController', function ($scope, $rootScope, $http, $window, $
             .success(function (data) {
                 dataShare.setLoading(false);
                 path = (admin) ? 'reportAdmin' : null;
-                dataShare.changePage(data, path);
+                dataShare.changePage(path, data);
             })
             .error(function (data) {
                 dataShare.setLoading(false);
@@ -235,7 +237,7 @@ app.controller('loginController', function ($scope, $http, dataShare) {
                 refresh();
                 if (data.id != -1) {
                     window.localStorage.setItem("id", data.id);
-                    dataShare.changePage(data);
+                    dataShare.changePage("menu", data);
                 }
             });
 
@@ -277,9 +279,36 @@ app.controller('menuController', function ($scope, $http, $location, dataShare, 
 
 app.controller('machinesController', function ($scope, $http, $timeout, $location, dataShare) {
     $scope.dataShare = dataShare;
-    if (dataShare.get()==null) { $location.path(''); return; }
+    //if (dataShare.get()==null) { $location.path(''); return; }
 	$scope.stockupdateinp = {val: 2};
+	$scope.params = {newSiteName: ""};
 
+	$scope.back = function() {
+		dataShare.changePage();
+	};
+	
+	$scope.sitesOptions = function() {
+		$scope.sitesOp = true;
+	}
+	
+	$scope.exitOp = function() {
+		$scope.sitesOp = false;
+	}
+	
+	var secondTouch = false;
+	$scope.newSiteSubmit = function() {
+		secondTouch = !secondTouch;
+		if (!secondTouch) return;
+		
+		if ($scope.params.newSiteName=="") return;
+		$http.jsonp(domain + 'ca-newSite.php?callback=JSON_CALLBACK&id=' + dataShare.get().id + "&site=" + $scope.params.newSiteName)
+            .success(function (data) {
+				dataShare.setLoading(false);
+                dataShare.set(data);
+				$scope.exitOp();
+            });
+		
+	};
     $scope.siteStockUpdateCB = function(approve) {
 		if (!approve) {
 			$scope.errorMsg = false;
@@ -293,7 +322,7 @@ app.controller('machinesController', function ($scope, $http, $timeout, $locatio
                 dataShare.set(data);
                 $scope.errorMsg = false;
             });
-    }
+    };
 					
 });
 
@@ -336,9 +365,36 @@ app.controller('notificationsController', function ($scope, $http, $location, $t
     $scope.dataShare = dataShare;
     if (dataShare.get()==null) { $location.path(''); return; }
 });
-
+/*
 angular.module('app').config(function ($mdDateLocaleProvider) {
     $mdDateLocaleProvider.formatDate = function (date) {
         return moment(date).format('D/M/YYYY');
     };
 });
+*/
+app.directive( 'onTouch' , function(){
+  return {
+    restrict: 'A',
+    replace : true,
+    link :  function( scope , element , attribs ){
+      
+      var ontouchFn = scope.$eval( attribs.onTouch );
+      element.bind( 'touchstart' , function( e ){
+      
+          if ( e ) e.preventDefault();
+          scope.$apply(function() {
+             ontouchFn.call(scope, e.which);
+          });
+      } );
+      element.bind( 'click' , function( e ){
+      
+          if ( e ) e.preventDefault();
+          scope.$apply(function() {
+             ontouchFn.call(scope, e.which);
+          });
+      } );
+      
+    }
+  };
+  
+} );
