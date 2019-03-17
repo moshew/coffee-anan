@@ -135,11 +135,11 @@ div{
 	top: 0;
 	left: 0;
 	width: 60%;
-	height: 42%;
+	height: 280px;
 	opacity:1;
 	padding-top: 35px;
 	text-align: right;
-	font-size: 150%;
+	font-size: 120%;
 	background: #4B79A1;  /* fallback for old browsers */
 	background: -webkit-linear-gradient(to top, #283E51, #4B79A1);  /* Chrome 10-25, Safari 5.1-6 */
 	background: linear-gradient(to top, #283E51, #4B79A1); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
