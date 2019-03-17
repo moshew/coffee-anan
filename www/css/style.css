@@ -135,7 +135,7 @@ div{
 	top: 0;
 	left: 0;
 	width: 60%;
-	height: 75%;
+	height: 42%;
 	opacity:1;
 	padding-top: 35px;
 	text-align: right;
@@ -154,35 +154,64 @@ div{
 	margin-right: 5%;
 }
 
+.ca-pageoptionsimg {
+	margin-left: 10px;
+}
+
 .ca-pageoptionsform {
-	margin: 10px auto;
+	margin: 0px auto;
 	width: 90%
 	
 }
 
 .ca-pageoptionslabel {
+	margin-bottom: -2px;
 	font-size: 70%;
 }
 
-input[type=text] {
+.ca-pageoptioninput {
+	width: 82%;
+	float: right;
+}
+
+/*input[type=text] {*/
+input {
   width: 100%;
-  padding-right: 5px;
+  padding: 0px 10px;
   font-size: 80%;
   color: white;
-  margin: 2px 0;
+  margin: 3px 0;
   border: none;
   border-bottom: 1px solid rgba(255,255,255,0.3);
   background: #4B79A1;
 }
 
-input[type=text]:focus {
+input:focus {
 	outline: none;
 	border: 1px solid white;
 }
 
 .ca-pageoptionsubmit {
-	margin-top: 10px;
-	text-align: left;
+	margin-top: -2px;
+	float: left;
+}
+
+.ca-pageoptionsubmitimg {
+	width: 27px;
+}
+
+.ca-pageoptionseparate {
+	clear: right;
+	margin-bottom:8px;
+}
+
+.ca-pageoptionsdeletesite {
+	border-style: solid;
+	width: 100%;
+	text-align: center;
+	font-size: 80%;
+	color: red;
+	margin: 3px 0;
 }
 
 .ca-pageoptions.ng-hide {
@@ -1315,6 +1344,13 @@ input[type="checkbox"]{
 }
 
 .ca-machinecount {
+	float:left;
+	margin-top: 6px;
+	margin-left: 10px;
+	font-size: 90%;
+}
+
+.ca-machineOp {
 	float:left;
 	margin-top: 6px;
 	margin-left: 10px;

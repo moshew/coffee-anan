@@ -279,51 +279,73 @@ app.controller('menuController', function ($scope, $http, $location, dataShare, 
 
 app.controller('machinesController', function ($scope, $http, $timeout, $location, dataShare) {
     $scope.dataShare = dataShare;
-    //if (dataShare.get()==null) { $location.path(''); return; }
-	$scope.stockupdateinp = {val: 2};
-	$scope.params = {newSiteName: ""};
-
+    if (dataShare.get()==null) { $location.path(''); return; }
+	$scope.params = {siteName: "", stockUpdate: 2, sharePhone: "", machineName:"", machineId:""};
+	
 	$scope.back = function() {
 		dataShare.changePage();
 	};
 	
-	$scope.sitesOptions = function() {
-		$scope.sitesOp = true;
-	}
+	$scope.optionsMenu = function() {
+		$scope.optionsShow = true;
+	};
 	
+	$scope.siteOptionShow = [false, false, false, false];
+	$scope.optionShow = function(keepId) {
+		var i;
+		for(i=0;i<$scope.siteOptionShow.length;i++) {
+			if (i!=keepId) $scope.siteOptionShow[i]=false;
+		}
+		if (keepId>=0) $scope.siteOptionShow[keepId] =! $scope.siteOptionShow[keepId];
+	};
+	
+	$scope.updateSite = function() {
+		$scope.params.siteName = dataShare.get().site.title;
+		$scope.optionShow(1);
+	};
+
 	$scope.exitOp = function() {
-		$scope.sitesOp = false;
-	}
+		$scope.optionsShow = false;
+		$scope.optionShow(-1);
+	};
 	
 	var secondTouch = false;
 	$scope.newSiteSubmit = function() {
 		secondTouch = !secondTouch;
 		if (!secondTouch) return;
-		
-		if ($scope.params.newSiteName=="") return;
-		$http.jsonp(domain + 'ca-newSite.php?callback=JSON_CALLBACK&id=' + dataShare.get().id + "&site=" + $scope.params.newSiteName)
+		if ($scope.params.siteName=="") return;
+		$http.jsonp(domain + 'ca-sites.php?callback=JSON_CALLBACK&id=' + dataShare.get().id + "&newSite=" + $scope.params.siteName)
             .success(function (data) {
 				dataShare.setLoading(false);
                 dataShare.set(data);
 				$scope.exitOp();
             });
-		
 	};
-    $scope.siteStockUpdateCB = function(approve) {
-		if (!approve) {
-			$scope.errorMsg = false;
-			return;
-		}
-		if ($scope.stockupdateinp.val==null) return;
-		dataShare.setLoading(true);
-		$http.jsonp(domain + 'ca-updateStock.php?callback=JSON_CALLBACK&id=' + dataShare.get().id + "&sid=" + dataShare.get().site.id + "&val=" + $scope.stockupdateinp.val)
+	
+	$scope.newMachineSubmit = function() {
+		secondTouch = !secondTouch;
+		if (!secondTouch) return;
+		if ($scope.params.machineName=="") return;
+		$http.jsonp(domain + 'ca-site.php?callback=JSON_CALLBACK&id=' + dataShare.get().id + "&sid="+ dataShare.get().site.id +"&newMachine=" + $scope.params.machineName + "&machineId=" + $scope.params.machineId)
             .success(function (data) {
 				dataShare.setLoading(false);
                 dataShare.set(data);
-                $scope.errorMsg = false;
+				$scope.exitOp();
+            });
+	};
+	
+    $scope.siteStockUpdate = function() {
+		secondTouch = !secondTouch;
+		if (!secondTouch) return;
+		if ($scope.params.stockUpdate=="") return;
+		dataShare.setLoading(true);
+		$http.jsonp(domain + 'ca-updateStock.php?callback=JSON_CALLBACK&id=' + dataShare.get().id + "&sid=" + dataShare.get().site.id + "&stockUpdate=" + $scope.params.stockUpdate)
+            .success(function (data) {
+				dataShare.setLoading(false);
+                dataShare.set(data);
+                $scope.exitOp();
             });
     };
-					
 });
 
 app.controller('reportsController', function ($scope, $http, $location, $timeout, dataShare) {
