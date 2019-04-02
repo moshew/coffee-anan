@@ -1,21 +1,17 @@
 <div class="ca-sitesheader">פרטי אתר
 	<div class="statusList-rightOpt" ng-click="dataShare.action('sites', 'ca-sites')"><img src="assets/back.png" /></div>
-	<div class="statusList-leftOpt" ng-click=""></div>
+	<div class="statusList-leftOpt" on-touch="optionsMenu"><img src="assets/options.png" /></div>
 </div><br />
 <div dir="rtl">
 <div class="ca-sitename">
 	<div class="ca-sitenametitle">שם האתר: </div>
-	<div class="ca-sitenameval">
-		{{dataShare.get().site.title}}&ensp;
-		[<span class="ca-sitenamelink" ng-click="dataShare.changePage('machines')"> הצג מכונות </span>]
-	</div>
+	<div class="ca-sitenameval">{{dataShare.get().site.title}}</div>
 </div>
 <div class="ca-siteheader">מלאי באתר</div>
 <div class="ca-sitestock">
 	<div class="ca-sitestocktitle">סה"כ מלאי </div><div class="ca-sitestockval">{{dataShare.get().site.stock}} פעימות</div>
 	<div class="ca-sitestocktitle">ניצול ממלאי </div><div class="ca-sitestockval">{{dataShare.get().site.used}} פעימות</div>
 	<div class="ca-sitestocktitle">זמינות </div><div class="ca-sitestockval">{{dataShare.get().site.avaliable}} פעימות ({{dataShare.get().site.pvaliable}}%)</div>
-	<div class="ca-sitestockbtn" ng-click="errorMsg=true">עדכן מלאי</div>
 </div>
 <div class="ca-siteheader">תקלות</div>
 <div class="ca-siteproblems">
@@ -33,5 +29,5 @@
 </div>
 -->
 </div>
-<div ng-include="'pages/ca-sitestock.html'"></div>
+<div ng-include="'pages/ca-siteop.html'"></div>
 <div ng-include="'pages/loader.html'"></div>
