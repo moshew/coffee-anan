@@ -292,6 +292,8 @@ app.controller('machinesController', function ($scope, $http, $timeout, $locatio
 	
 	$scope.siteOptionShow = [false, false, false, false];
 	$scope.optionShow = function(keepId) {
+		if (dataShare.get().site.admin == 0) return;
+		
 		var i;
 		for(i=0;i<$scope.siteOptionShow.length;i++) {
 			if (i!=keepId) $scope.siteOptionShow[i]=false;

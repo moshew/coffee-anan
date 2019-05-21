@@ -14,7 +14,7 @@
 				</span>
 				<div style="margin-top:5px;" ng-if="descShow[machine.id]">
 					<div class="ca-machinedrink" ng-repeat="drink in machine.drinks">
-						<div class="ca-machinedrinkborder"><img class="ca-machinedrinkimg" ng-src="assets/drinks/{{machine.type}}/{{drink.id}}.png" /><div class="ca-machinedrinklbl">{{drink.title}}</div></div>
+						<div class="ca-machinedrinkborder"><img class="ca-machinedrinkimg" ng-src="assets/drinks/{{machine.type}}/{{drink.id}}.png" /><div class="ca-machinedrinklbl">{{drink.title}}</div><div class="ca-machinedrinklbl2">{{drink.val}}</div></div>
 					</div>
 					<div class="ca-machinecleanline"></div>
 					<div class="ca-machineclean"><img class="ca-machinecleanimg" src="assets/drinks/cleaning_icon.png" />ניקיון כללי: {{machine.clean.cleanings}}, (רמת נוכחית: {{machine.clean.cleaning_level}}%)</div>

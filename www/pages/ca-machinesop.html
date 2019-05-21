@@ -1,6 +1,6 @@
 ﻿<div class="ca-popupMsg" ng-show="optionsShow" on-touch="exitOp"></div>
 <div class="ca-pageoptions" ng-show="optionsShow">
-	<div class="ca-pageoptionstitle" ng-click="optionShow(0)">מכונה חדשה<img class="ca-pageoptionsimg" width="20px" src="assets/operations/new_machine.png" /></div>
+	<div class="ca-pageoptionstitle" ng-style="{opacity: dataShare.get().site.admin > 0 ? 1 : 0.5}" ng-click="optionShow(0)">מכונה חדשה<img class="ca-pageoptionsimg" width="20px" src="assets/operations/new_machine.png" /></div>
 	<div class="ca-pageoptionsform" ng-show="siteOptionShow[0]">
 		<div class="ca-pageoptionslabel">:שם המכונה</div>
 		<input type="text" ng-model="params.machineName">
@@ -10,6 +10,6 @@
 		<div class="ca-pageoptionsubmit" on-touch="newMachineSubmit"><img class="ca-pageoptionsubmitimg" src="assets/operations/submit.png" /></div>
 		<div class="ca-pageoptionseparate"></div>
 	</div>
-	<div class="ca-pageoptionstitle" ng-click="optionShow(1)">החלפת מכונה<img class="ca-pageoptionsimg" width="20px" src="assets/operations/swap_machine.png" /></div>
+	<div class="ca-pageoptionstitle" ng-style="{opacity: dataShare.get().site.admin > 0 ? 1 : 0.5}" ng-click="optionShow(1)">החלפת מכונה<img class="ca-pageoptionsimg" width="20px" src="assets/operations/swap_machine.png" /></div>
 	<div class="ca-pageoptionsform" style="font-size:75%" ng-show="siteOptionShow[1]">...בקרוב</div>
 </div>

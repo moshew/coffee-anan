@@ -169,6 +169,7 @@ div{
 	font-size: 70%;
 }
 
+
 .ca-pageoptioninput {
 	width: 82%;
 	float: right;
@@ -1373,15 +1374,23 @@ input[type="checkbox"]{
 }
 
 .ca-machinedrinkimg {
-	margin: 10px 10px;
+	margin: 4px 8px;
 	width: 57px;
 	height: 57px;
 }
 
 .ca-machinedrinklbl {
+	margin-top: 0px;
 	text-align: center;
 	font-size: 50%;
 }
+
+.ca-machinedrinklbl2 {
+	margin-top: -2px;
+	text-align: center;
+	font-size: 75%;
+}
+
 
 .ca-machinecleanline {
     padding-bottom: 7px;
