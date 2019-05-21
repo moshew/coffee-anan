@@ -786,10 +786,13 @@ input:focus {
 	margin-left: 5px;
 }
 
+.ca-notificationsiteml {
+	font-size:85%;
+}
 .ca-notificationsiteml2 {
-	margin-right: 0px;
 	font-size:60%;
 }
+
 
 .statusList-leftOpt {
     float: left;
