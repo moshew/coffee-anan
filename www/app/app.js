@@ -290,7 +290,7 @@ app.controller('appController', function ($scope, $http, $timeout, $location, da
 	var init = function () {
 		document.addEventListener('backbutton', function () {
             $scope.back();
-			//$scope.$apply();
+			$scope.$apply();
         }, false);
     };
 	init();
