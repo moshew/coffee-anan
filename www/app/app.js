@@ -287,11 +287,12 @@ app.controller('appController', function ($scope, $http, $timeout, $location, da
 	$scope.monthBtn = "נוכחי";
 	$scope.settings = [{title:'התראה על אי שימוש במכונה למעלה מ-24 שעות',status:true}, {title:'התרעה על זמינות נמוכה מ-20% באתר', status:true}];
 
-	var init = function() {
+	$var init = function () {
 		document.addEventListener('backbutton', function () {
-				$scope.back();
-			}, false);
-	};
+            $scope.back();
+			$scope.$apply();
+        }, false);
+    };
 	init();
 	
 	$scope.back = function() {
@@ -442,6 +443,7 @@ app.directive( 'onTouch' , function(){
              ontouchFn.call(scope, e.which);
           });
       } );
+	  /*
       element.bind( 'click' , function( e ){
       
           if ( e ) e.preventDefault();
@@ -449,6 +451,7 @@ app.directive( 'onTouch' , function(){
              ontouchFn.call(scope, e.which);
           });
       } );
+	  */
       
     }
   };
