@@ -288,7 +288,6 @@ app.controller('appController', function ($scope, $http, $timeout, $location, da
 	$scope.settings = [{title:'התראה על אי שימוש במכונה למעלה מ-24 שעות',status:true}, {title:'התרעה על זמינות נמוכה מ-20% באתר', status:true}];
 
 	document.addEventListener('backbutton', function () {
-            VideoPlayer.close();
             $scope.back();
         }, false);
 		
