@@ -287,10 +287,13 @@ app.controller('appController', function ($scope, $http, $timeout, $location, da
 	$scope.monthBtn = "נוכחי";
 	$scope.settings = [{title:'התראה על אי שימוש במכונה למעלה מ-24 שעות',status:true}, {title:'התרעה על זמינות נמוכה מ-20% באתר', status:true}];
 
-	document.addEventListener('backbutton', function () {
-            $scope.back();
-        }, false);
-		
+	init();
+	var init = function() {
+		document.addEventListener('backbutton', function () {
+				$scope.back();
+			}, false);
+	};
+	
 	$scope.back = function() {
 		switch(dataShare.path) {
 			case "site":
