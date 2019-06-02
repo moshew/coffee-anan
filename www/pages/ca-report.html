@@ -3,7 +3,7 @@
 	<div class="statusList-leftOpt" on-touch="optionsMenu"><img src="assets/options.png" /></div>
 </div><br />
 <div class="statusList-info" ng-cloak>
-	<div ng-if="dataShare.get().rid==1" class="ca_reportbtns"><div ng-class="{ca_reportbtn:true, chosen:btn=='נוכחי'}" ng-repeat="btn in ['קודם', 'נוכחי']">{{btn}}</div></div>
+	<div ng-if="dataShare.get().rid==1" class="ca_reportbtns"><div ng-class="{ca_reportbtn:true, chosen:monthBtn==btn}" ng-click="changeMonthReport(btn)" ng-repeat="btn in ['קודם', 'נוכחי']">{{btn}}</div></div>
     <div class="ca_reportitem" ng-repeat="result in dataShare.get().results"><div class="statusList-user">{{ result.title }}<div class="ca-reportitemval">{{ result.val }}</div></div></div>
 </div>
 <div ng-include="'pages/ca-reportop.html'"></div>

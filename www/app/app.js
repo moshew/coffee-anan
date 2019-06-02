@@ -355,11 +355,22 @@ app.controller('reportsController', function ($scope, $http, $location, $timeout
 	if (dataShare.get()==null) { $location.path(''); return; }
 	
 	$scope.reports = [{id:0, title:'דוח זמינות באתרים',img:"1.png"}, {id:1, title:'דוח ניצול חודשי', img:"2.png"}, {id:2, title:'יצירת לו"ז עתידי', img:"3.png"}];
+	$scope.monthBtn = "נוכחי";
 
 	$scope.getReport = function (op) {
 		params = {'op': op};
 		dataShare.action('report', 'ca-report', params);
     };
+	
+	$scope.changeMonthReport = function (btn) {
+		$scope.monthBtn = btn;
+		var prev = ($scope.monthBtn=="נוכחי")?"":"&prev";
+		$http.jsonp(domain + 'ca-report.php?callback=JSON_CALLBACK&id=' + dataShare.get().id+"&op=1"+prev)
+			.success(function (data) {
+                dataShare.set(data);
+            });
+
+	};
 	
 	$scope.optionsMenu = function() {
 		$scope.optionsShow = true;
@@ -377,7 +388,8 @@ app.controller('reportsController', function ($scope, $http, $location, $timeout
 			$scope.exportStatus = "לא ניתן לייצא דוח זה";
 		} else {
 			$scope.exportExcelProgShow = true;
-			$http.jsonp(domain + 'ca-reportcharge.php?callback=JSON_CALLBACK&id=' + dataShare.get().id)
+			var prev = ($scope.monthBtn=="נוכחי")?"":"&prev";
+			$http.jsonp(domain + 'ca-reportcharge.php?callback=JSON_CALLBACK&id=' + dataShare.get().id+prev)
 				.success(function (data) {
 					dataShare.setLoading(false);
 					$scope.exportExcelProgShow = false;
