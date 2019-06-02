@@ -1,8 +1,10 @@
 <div class="ca-sitesheader report">{{reports[dataShare.get().rid].title}}
-	<div class="statusList-rightOpt" ng-click="dataShare.action('reports')"><img src="assets/back.png" /></div>
-	<div class="statusList-leftOpt" ng-click=""></div>
+	<div class="statusList-rightOpt" on-touch="back"><img src="assets/back.png" /></div>
+	<div class="statusList-leftOpt" on-touch="optionsMenu"><img src="assets/options.png" /></div>
 </div><br />
 <div class="statusList-info" ng-cloak>
+	<div ng-if="dataShare.get().rid==1" class="ca_reportbtns"><div ng-class="{ca_reportbtn:true, chosen:monthBtn==btn}" ng-click="changeMonthReport(btn)" ng-repeat="btn in ['קודם', 'נוכחי']">{{btn}}</div></div>
     <div class="ca_reportitem" ng-repeat="result in dataShare.get().results"><div class="statusList-user">{{ result.title }}<div class="ca-reportitemval">{{ result.val }}</div></div></div>
 </div>
+<div ng-include="'pages/ca-reportop.html'"></div>
 <div ng-include="'pages/loader.html'"></div>

@@ -1,5 +1,5 @@
 <div class="ca-sitesheader">מכונות
-	<div class="statusList-rightOpt" ng-click="dataShare.action('site')"><img src="assets/back.png" /></div>
+	<div class="statusList-rightOpt" on-touch="back"><img src="assets/back.png" /></div>
 	<div class="statusList-leftOpt" on-touch="optionsMenu"><img src="assets/options.png" /></div>
 </div><br />
 <div class="ca-machinesList" dir="rtl">
@@ -14,7 +14,7 @@
 				</span>
 				<div style="margin-top:5px;" ng-if="descShow[machine.id]">
 					<div class="ca-machinedrink" ng-repeat="drink in machine.drinks">
-						<div class="ca-machinedrinkborder"><img class="ca-machinedrinkimg" ng-src="assets/drinks/{{machine.type}}/{{drink.id}}.png" /><div class="ca-machinedrinklbl">{{drink.title}}</div></div>
+						<div class="ca-machinedrinkborder"><img class="ca-machinedrinkimg" ng-src="assets/drinks/{{machine.type}}/{{drink.id}}.png" /><div class="ca-machinedrinklbl">{{drink.title}}</div><div class="ca-machinedrinklbl2">{{drink.val}}</div></div>
 					</div>
 					<div class="ca-machinecleanline"></div>
 					<div class="ca-machineclean"><img class="ca-machinecleanimg" src="assets/drinks/cleaning_icon.png" />ניקיון כללי: {{machine.clean.cleanings}}, (רמת נוכחית: {{machine.clean.cleaning_level}}%)</div>

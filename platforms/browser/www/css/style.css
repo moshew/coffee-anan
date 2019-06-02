@@ -161,12 +161,15 @@ div{
 .ca-pageoptionsform {
 	margin: 0px auto;
 	width: 90%
-	
 }
 
 .ca-pageoptionslabel {
 	margin-bottom: -2px;
 	font-size: 70%;
+}
+
+.ca-pageoptionslabel.red {
+	font-color: red;
 }
 
 .ca-pageoptioninput {
@@ -205,15 +208,23 @@ input:focus {
 	margin-bottom:8px;
 }
 
-.ca-pageoptionsdeletesite {
+.ca-pageoptionsborder {
 	border-style: solid;
 	width: 100%;
 	text-align: center;
 	font-size: 80%;
-	color: red;
 	margin: 3px 0;
 }
 
+.ca-pageoptionsborderred {
+	border-style: solid;
+	width: 100%;
+	text-align: center;
+	color: red;
+	font-size: 80%;
+	margin: 3px 0;
+
+}
 .ca-pageoptions.ng-hide {
     left: -60%;
 }
@@ -782,13 +793,18 @@ input:focus {
 }
 
 .ca-notificationsitemimg {
+	float: right;
+	margin-top: 4px;
 	margin-left: 5px;
 }
 
+.ca-notificationsiteml {
+	font-size:80%;
+}
 .ca-notificationsiteml2 {
-	margin-right: 0px;
 	font-size:60%;
 }
+
 
 .statusList-leftOpt {
     float: left;
@@ -829,6 +845,29 @@ input:focus {
     font-size:175%;
 }
 
+.ca_reportbtns {
+	text-align: center;
+	
+}
+
+.ca_reportbtn {
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 10px;
+    border-color: rgba(255,255,255,0.3);
+	color: rgba(255,255,255,0.85);
+	box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+	margin: 5px 7px;
+	width: 65px;
+	padding: 2px 0;
+	text-align: center;
+	display: inline-block;
+}
+.ca_reportbtn.chosen {
+	background-color: rgba(0,0,0,0.2);
+}
+
+
 .ca_reportitem {
     margin-right: 20px;
     margin-left: 20px;
@@ -862,7 +901,7 @@ input:focus {
 
 .ca-reportitemval
 {
-    width: 80px;
+    /*width: 80px;*/
     float: left;
 	text-align: left;
     /*font-size:75%;*/
@@ -1373,15 +1412,23 @@ input[type="checkbox"]{
 }
 
 .ca-machinedrinkimg {
-	margin: 10px 10px;
+	margin: 4px 8px;
 	width: 57px;
 	height: 57px;
 }
 
 .ca-machinedrinklbl {
+	margin-top: 0px;
 	text-align: center;
 	font-size: 50%;
 }
+
+.ca-machinedrinklbl2 {
+	margin-top: -2px;
+	text-align: center;
+	font-size: 75%;
+}
+
 
 .ca-machinecleanline {
     padding-bottom: 7px;

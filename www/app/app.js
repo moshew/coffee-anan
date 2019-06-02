@@ -117,7 +117,7 @@ app.factory('dataShare', function ($http, $location, $timeout, $window) {
     service.setSettings = function(key1, val1) {
         this.settings[key1] = val1;
     };
-
+	
     service.getZoomFactor = function() {
         return Math.min(window.innerWidth/3.75, window.innerHeight/6.67);
     };
@@ -172,17 +172,15 @@ app.controller('mainController', function ($scope, $rootScope, $http, $window, $
     $scope.zoomFactor = dataShare.getZoomFactor();
 
 	var id = window.localStorage.getItem("id");
-    $http.jsonp(domain + 'ca-login.php?callback=JSON_CALLBACK&id=' + id)
-        .success(function (data) {
-            //dataShare.set(data);
+	$http.jsonp(domain + 'ca-login.php?callback=JSON_CALLBACK&id=' + id)
+		.success(function (data) {
+			//dataShare.set(data);
 			if (data.ver <= 0.5) {
 				if (data.id == -1) dataShare.changePage("login", data);
 				else dataShare.changePage("menu", data);  //#####
 			} else dataShare.action('versionUpdate');
-        });
-
-		
-		
+		});
+	
     $scope.enter = function (admin) {
         dataShare.setLoading(true);
         $http.jsonp(domain + 'login.php?callback=JSON_CALLBACK&id=' + dataShare.get().id)
@@ -286,15 +284,11 @@ app.controller('appController', function ($scope, $http, $timeout, $location, da
 	$scope.reports = [{id:0, title:'דוח זמינות באתרים',img:"1.png"}, {id:1, title:'דוח ניצול חודשי', img:"2.png"}, {id:2, title:'יצירת לו"ז עתידי', img:"3.png"}];
 	$scope.monthBtn = "נוכחי";
 	$scope.settings = [{title:'התראה על אי שימוש במכונה למעלה מ-24 שעות',status:true}, {title:'התרעה על זמינות נמוכה מ-20% באתר', status:true}];
-
-	var init = function () {
-		document.addEventListener('backbutton', function () {
-            $scope.back();
-			$scope.$apply();
-        }, false);
-    };
-	init();
 	
+	document.addEventListener('backbutton', function () {
+		return;
+	}, false);
+		
 	$scope.back = function() {
 		switch(dataShare.path) {
 			case "site":
@@ -311,6 +305,7 @@ app.controller('appController', function ($scope, $http, $timeout, $location, da
 				break;
 			default:
 				dataShare.changePage();
+				
 		}
 	};
 	

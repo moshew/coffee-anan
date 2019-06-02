@@ -25,11 +25,22 @@
     <script src="scripts/ng-mobile.js"></script>
     <script src="scripts/mobile-nav.min.js"></script>
     <script src="scripts/moment.js"></script>
+	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+
+	<script type="text/javascript">
+        document.addEventListener("deviceready", function() {
+            angular.bootstrap(document, ['app']);
+            document.addEventListener('backbutton', function () {
+                event.preventDefault();
+            }, false);
+        }, false);
+    </script>
+
 </head>
-<body ng-controller="mainController" ng-cloak>
+<body ng-controller="mainController" onload="onLoad()" ng-cloak>
     <div class="page" ng-style="{'zoom': zoomFactor+'%', 'font-size': zoomFactor+'%'}" ng-cloak ng-view></div>
     <!--<div class="page" ng-style="{'zoom': dataShare.getZoomFactor()+'%'}" ng-cloak ng-view></div>-->
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    
     <script src="app/app.js"></script>
 </body>
 </html>

@@ -1,30 +1,30 @@
 ﻿<div class="ca-popupMsg" ng-show="optionsShow" on-touch="exitOp"></div>
 <div class="ca-pageoptions" ng-show="optionsShow">
 	<div class="ca-pageoptionstitle" ng-click="dataShare.changePage('machines')">רשימת מכונות<img class="ca-pageoptionsimg" width="20px" src="assets/operations/machines.png" /></div>
-	<div class="ca-pageoptionstitle" ng-click="optionShow(0)">עדכן מלאי<img class="ca-pageoptionsimg" width="20px" src="assets/operations/stock.png" /></div>
+	<div class="ca-pageoptionstitle" ng-style="{opacity: dataShare.get().site.admin > 0 ? 1 : 0.5}" ng-click="optionShow(0)">עדכן מלאי<img class="ca-pageoptionsimg" width="20px" src="assets/operations/stock.png" /></div>
 	<div class="ca-pageoptionsform" ng-show="siteOptionShow[0]">
 		<div class="ca-pageoptionslabel" dir="rtl">עידכון מלאי (בק"ג):</div>
 		<div class="ca-pageoptioninput"><input type="text" ng-model="params.stockUpdate"></div>
 		<div class="ca-pageoptionsubmit" on-touch="siteStockUpdate"><img class="ca-pageoptionsubmitimg" src="assets/operations/submit.png" /></div>
 		<div class="ca-pageoptionseparate"></div>
 	</div>
-	<div class="ca-pageoptionstitle" ng-click="updateSite()">עדכן פרטי אתר<img class="ca-pageoptionsimg" width="20px" src="assets/operations/update_site.png" /></div>
+	<div class="ca-pageoptionstitle" ng-style="{opacity: dataShare.get().site.admin > 0 ? 1 : 0.5}" ng-click="updateSite()">עדכן פרטי אתר<img class="ca-pageoptionsimg" width="20px" src="assets/operations/update_site.png" /></div>
 	<div class="ca-pageoptionsform" ng-show="siteOptionShow[1]">
 		<div class="ca-pageoptionslabel">:שם האתר</div>
 		<div class="ca-pageoptioninput"><input type="text" ng-model="params.siteName" dir="rtl"></div>
 		<div class="ca-pageoptionsubmit" on-touch="siteStockUpdate"><img class="ca-pageoptionsubmitimg" src="assets/operations/submit.png" /></div>
 		<div class="ca-pageoptionseparate"></div>
 	</div>
-	<div class="ca-pageoptionstitle" ng-click="optionShow(2)">שיתוף האתר<img class="ca-pageoptionsimg" width="20px" src="assets/operations/share_site.png" /></div>
+	<div class="ca-pageoptionstitle" ng-style="{opacity: dataShare.get().site.admin > 0 ? 1 : 0.5}" ng-click="optionShow(2)">שיתוף האתר<img class="ca-pageoptionsimg" width="20px" src="assets/operations/share_site.png" /></div>
 	<div class="ca-pageoptionsform" ng-show="siteOptionShow[2]">
 		<div class="ca-pageoptionslabel">:מספר טלפון לשיתוף</div>
 		<div class="ca-pageoptioninput"><input type="text" ng-model="params.sharePhone" dir="rtl"></div>
 		<div class="ca-pageoptionsubmit" on-touch="siteStockUpdate"><img class="ca-pageoptionsubmitimg" src="assets/operations/submit.png" /></div>
 		<div class="ca-pageoptionseparate"></div>
 	</div>
-	<div class="ca-pageoptionstitle" ng-click="optionShow(3)">מחק אתר<img class="ca-pageoptionsimg" width="20px" src="assets/operations/delete_site.png" /></div>
+	<div class="ca-pageoptionstitle" ng-style="{opacity: dataShare.get().site.admin > 0 ? 1 : 0.5}" ng-click="optionShow(3)">מחק אתר<img class="ca-pageoptionsimg" width="20px" src="assets/operations/delete_site.png" /></div>
 	<div class="ca-pageoptionsform" ng-show="siteOptionShow[3]">
-		<div class="ca-pageoptionsdeletesite" dir="rtl">אשר בקשת מחיקה</div>
+		<div class="ca-pageoptionsborderred" dir="rtl">אשר בקשת מחיקה</div>
 		<div class="ca-pageoptionseparate"></div>
 	</div>
 </div>
