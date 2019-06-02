@@ -289,9 +289,8 @@ app.controller('appController', function ($scope, $http, $timeout, $location, da
 
 	var init = function () {
 		document.addEventListener('backbutton', function () {
-			event.preventDefault();
             $scope.back();
-			$scope.$apply();
+			//$scope.$apply();
         }, false);
     };
 	init();
