@@ -49,37 +49,37 @@ app.config(function ($routeProvider) {
 
         .when('/sites', {
             templateUrl: 'pages/ca-sites.html',
-            controller: 'machinesController'
+            controller: 'appController'
         })
 
         .when('/site', {
             templateUrl: 'pages/ca-site.html',
-            controller: 'machinesController'
+            controller: 'appController'
         })
 
         .when('/machines', {
             templateUrl: 'pages/ca-machines.html',
-            controller: 'machinesController'
+            controller: 'appController'
         })
 
         .when('/notifications', {
             templateUrl: 'pages/ca-notifications.html',
-            controller: 'notificationsController'
+            controller: 'appController'
         })
 
         .when('/reports', {
             templateUrl: 'pages/ca-reports.html',
-            controller: 'reportsController'
+            controller: 'appController'
         })
 
         .when('/report', {
             templateUrl: 'pages/ca-report.html',
-            controller: 'reportsController'
+            controller: 'appController'
         })
 		
 		.when('/settings', {
             templateUrl: 'pages/ca-settings.html',
-            controller: 'settingsController'
+            controller: 'appController'
         })
 
 
@@ -98,6 +98,7 @@ app.config(function ($mdThemingProvider) {
 app.factory('dataShare', function ($http, $location, $timeout, $window) {
     var service = {};
     var pagePromise = null;
+	service.page = 'menu';
     service.data = null;
     service.settings = null;
 
@@ -124,6 +125,7 @@ app.factory('dataShare', function ($http, $location, $timeout, $window) {
     service.changePage = function (path, data) {
         if (path == null) path = 'menu';
         if (data!=null) this.set(data);
+		this.path = path;
         $location.path(path);
     };
 
@@ -277,13 +279,36 @@ app.controller('menuController', function ($scope, $http, $location, dataShare, 
     };
 });
 
-app.controller('machinesController', function ($scope, $http, $timeout, $location, dataShare) {
+app.controller('appController', function ($scope, $http, $timeout, $location, dataShare) {
     $scope.dataShare = dataShare;
     if (dataShare.get()==null) { $location.path(''); return; }
 	$scope.params = {siteName: "", stockUpdate: 2, sharePhone: "", machineName:"", machineId:""};
-	
+	$scope.reports = [{id:0, title:'דוח זמינות באתרים',img:"1.png"}, {id:1, title:'דוח ניצול חודשי', img:"2.png"}, {id:2, title:'יצירת לו"ז עתידי', img:"3.png"}];
+	$scope.monthBtn = "נוכחי";
+	$scope.settings = [{title:'התראה על אי שימוש במכונה למעלה מ-24 שעות',status:true}, {title:'התרעה על זמינות נמוכה מ-20% באתר', status:true}];
+
+	document.addEventListener('backbutton', function () {
+            VideoPlayer.close();
+            $scope.back();
+        }, false);
+		
 	$scope.back = function() {
-		dataShare.changePage();
+		switch(dataShare.path) {
+			case "site":
+				dataShare.action('sites', 'ca-sites');
+				break;
+			case "machines":
+				dataShare.action('site');
+				break;
+			case "report":
+				dataShare.action('reports');
+				break;
+			case "settings":
+				$scope.closePermissions(false);
+				break;
+			default:
+				dataShare.changePage();
+		}
 	};
 	
 	$scope.optionsMenu = function() {
@@ -309,6 +334,7 @@ app.controller('machinesController', function ($scope, $http, $timeout, $locatio
 	$scope.exitOp = function() {
 		$scope.optionsShow = false;
 		$scope.optionShow(-1);
+		$scope.exportExcelResultShow = false;
 	};
 	
 	var secondTouch = false;
@@ -348,14 +374,7 @@ app.controller('machinesController', function ($scope, $http, $timeout, $locatio
                 $scope.exitOp();
             });
     };
-});
 
-app.controller('reportsController', function ($scope, $http, $location, $timeout, dataShare) {
-    $scope.dataShare = dataShare;
-	if (dataShare.get()==null) { $location.path(''); return; }
-	
-	$scope.reports = [{id:0, title:'דוח זמינות באתרים',img:"1.png"}, {id:1, title:'דוח ניצול חודשי', img:"2.png"}, {id:2, title:'יצירת לו"ז עתידי', img:"3.png"}];
-	$scope.monthBtn = "נוכחי";
 
 	$scope.getReport = function (op) {
 		params = {'op': op};
@@ -372,15 +391,6 @@ app.controller('reportsController', function ($scope, $http, $location, $timeout
 
 	};
 	
-	$scope.optionsMenu = function() {
-		$scope.optionsShow = true;
-	};
-	
-	$scope.exitOp = function() {
-		$scope.optionsShow = false;
-		$scope.exportExcelResultShow = false;
-	};
-
 	$scope.exportReport = function() {
 		if ($scope.exportExcelProgShow) return;
 		if (dataShare.get().rid != 1) {
@@ -401,17 +411,8 @@ app.controller('reportsController', function ($scope, $http, $location, $timeout
             });
 		}
 	};
-});
-
-
-app.controller('settingsController', function ($scope, $http, $location, $timeout, dataShare) {
-    $scope.dataShare = dataShare;
-	if (dataShare.get()==null) { $location.path(''); return; }
 	
-    var switchEnable = true;
-	
-	$scope.settings = [{title:'התראה על אי שימוש במכונה למעלה מ-24 שעות',status:true}, {title:'התרעה על זמינות נמוכה מ-20% באתר', status:true}];
-	
+	var switchEnable = true;
 	$scope.switchSetting = function (setting) {
         if (switchEnable) {
             switchEnable = false;
@@ -425,17 +426,6 @@ app.controller('settingsController', function ($scope, $http, $location, $timeou
     };
 });
 
-app.controller('notificationsController', function ($scope, $http, $location, $timeout, dataShare) {
-    $scope.dataShare = dataShare;
-    if (dataShare.get()==null) { $location.path(''); return; }
-});
-/*
-angular.module('app').config(function ($mdDateLocaleProvider) {
-    $mdDateLocaleProvider.formatDate = function (date) {
-        return moment(date).format('D/M/YYYY');
-    };
-});
-*/
 app.directive( 'onTouch' , function(){
   return {
     restrict: 'A',
