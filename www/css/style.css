@@ -161,7 +161,6 @@ div{
 .ca-pageoptionsform {
 	margin: 0px auto;
 	width: 90%
-	
 }
 
 .ca-pageoptionslabel {
@@ -169,6 +168,9 @@ div{
 	font-size: 70%;
 }
 
+.ca-pageoptionslabel.red {
+	font-color: red;
+}
 
 .ca-pageoptioninput {
 	width: 82%;
@@ -206,15 +208,23 @@ input:focus {
 	margin-bottom:8px;
 }
 
-.ca-pageoptionsdeletesite {
+.ca-pageoptionsborder {
 	border-style: solid;
 	width: 100%;
 	text-align: center;
 	font-size: 80%;
-	color: red;
 	margin: 3px 0;
 }
 
+.ca-pageoptionsborderred {
+	border-style: solid;
+	width: 100%;
+	text-align: center;
+	color: red;
+	font-size: 80%;
+	margin: 3px 0;
+
+}
 .ca-pageoptions.ng-hide {
     left: -60%;
 }

@@ -1,0 +1,10 @@
+﻿<div class="ca-popupMsg" ng-show="optionsShow" on-touch="exitOp"></div>
+<div class="ca-pageoptions" ng-show="optionsShow">
+	<div class="ca-pageoptionstitle" ng-click="exportReport()">יצא לאקסל<img class="ca-pageoptionsimg" width="20px" src="assets/operations/excel.png" /></div>
+	<div class="ca-pageoptionsform" ng-show="exportExcelProgShow" dir="rtl">
+		<div class="ca-pageoptionsborder">בתהליך ייצוא...</div>
+	</div>
+	<div class="ca-pageoptionsform" ng-show="exportExcelResultShow" dir="rtl">
+		<div class="ca-pageoptionslabel red">{{exportStatus}}</div>
+	</div>
+</div>

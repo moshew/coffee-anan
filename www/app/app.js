@@ -360,7 +360,35 @@ app.controller('reportsController', function ($scope, $http, $location, $timeout
 		params = {'op': op};
 		dataShare.action('report', 'ca-report', params);
     };
+	
+	$scope.optionsMenu = function() {
+		$scope.optionsShow = true;
+	};
+	
+	$scope.exitOp = function() {
+		$scope.optionsShow = false;
+		$scope.exportExcelResultShow = false;
+	};
 
+	$scope.exportReport = function() {
+		if ($scope.exportExcelProgShow) return;
+		if (dataShare.get().rid != 1) {
+			$scope.exportExcelResultShow = true;
+			$scope.exportStatus = "לא ניתן לייצא דוח זה";
+		} else {
+			$scope.exportExcelProgShow = true;
+			$http.jsonp(domain + 'ca-reportcharge.php?callback=JSON_CALLBACK&id=' + dataShare.get().id)
+				.success(function (data) {
+					dataShare.setLoading(false);
+					$scope.exportExcelProgShow = false;
+					if (data["msg"]=="sent") $scope.exitOp();
+					else {
+						$scope.exportExcelResultShow = true;
+						if (data["msg"]=="no-email") $scope.exportStatus = " נדרש להגדיר אימייל בפרופיל המשתמש";
+					}
+            });
+		}
+	};
 });
 
 
